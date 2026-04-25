@@ -34,7 +34,7 @@ export default function Hero() {
         <div className="absolute inset-0 z-0">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/Volumes/Extreme Pro/Programming/legoro/legoro/public/City_Background.png')" }}
+            style={{ backgroundImage: "url('/City_Background.png')" }}
           />
           <div className="absolute inset-0 bg-industrial-base/60 backdrop-blur-sm" />
           <div className="absolute inset-0 bg-linear-to-b from-industrial-base/20 via-transparent to-industrial-base" />

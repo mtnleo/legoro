@@ -46,11 +46,11 @@
 
 @layer utilities {
   .glass {
-    @apply backdrop-blur-xl bg-industrial-navy/60 border border-white/10;
+    @apply backdrop-blur-xl bg-industrial-navy/60 border-white/10;
   }
 
   .glass-light {
-    @apply backdrop-blur-md bg-white/5 border border-white/10;
+    @apply backdrop-blur-md bg-white/5  border-white/10;
   }
 
   .btn-hover-effect {
