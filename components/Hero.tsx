@@ -17,11 +17,30 @@ function scrollToContact() {
 
 export default function Hero() {
   const [showMobileCta, setShowMobileCta] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactVisible, setIsContactVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setShowMobileCta(window.scrollY > 400);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleMenuState = (e: Event) => setIsMenuOpen((e as CustomEvent<boolean>).detail);
+    window.addEventListener('legoro:menustate', handleMenuState);
+    return () => window.removeEventListener('legoro:menustate', handleMenuState);
+  }, []);
+
+  useEffect(() => {
+    const contactEl = document.querySelector('#contacto');
+    if (!contactEl) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsContactVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    observer.observe(contactEl);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -109,7 +128,7 @@ export default function Hero() {
 
       {/* Mobile sticky CTA */}
       <AnimatePresence>
-        {showMobileCta && (
+        {showMobileCta && !isMenuOpen && !isContactVisible && (
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}

@@ -6,10 +6,10 @@ import { Menu, X, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 const NAV_ITEMS = [
-  { name: 'Servicios', href: '#servicios' },
-  { name: 'Por qué elegirnos', href: '#elegirnos' },
-  { name: 'Nuestro Equipo', href: '#equipo' },
-  { name: 'Contacto Directo', href: '#contacto' },
+  { name: 'SERVICIOS', href: '#servicios' },
+  { name: 'ELEGIRNOS', href: '#elegirnos' },
+  { name: 'EQUIPO', href: '#equipo' },
+  { name: 'CONTACTO', href: '#contacto' },
 ];
 
 function scrollTo(href: string) {
@@ -49,9 +49,9 @@ export default function Navbar() {
         </div>
 
         {/* Desktop pill nav */}
-        <div className="hidden md:flex items-center justify-center flex-shrink-0">
+        <div className="hidden md:flex items-center justify-center shrink-0">
           <div className="bg-white/5 border border-white/10 rounded-full px-6 py-2.5 backdrop-blur-md">
-            <div className="flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.25em] opacity-80">
+            <div className="flex items-center gap-8 text-xs font-black uppercase tracking-[0.25em] opacity-80">
               {NAV_ITEMS.map((item) => (
                 <button
                   key={item.href}
@@ -76,7 +76,7 @@ export default function Navbar() {
 
           <button
             className="md:hidden p-3 bg-white/5 border border-white/10 rounded-2xl flex-shrink-0"
-            onClick={() => setIsMenuOpen(true)}
+            onClick={() => { setIsMenuOpen(true); window.dispatchEvent(new CustomEvent('legoro:menustate', { detail: true })); }}
           >
             <Menu className="w-6 h-6 text-industrial-accent" />
           </button>
@@ -102,7 +102,7 @@ export default function Navbar() {
                 className="h-10 w-auto object-contain"
               />
               <button
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => { setIsMenuOpen(false); window.dispatchEvent(new CustomEvent('legoro:menustate', { detail: false })); }}
                 className="p-3 bg-white/5 border border-white/10 rounded-2xl"
               >
                 <X className="w-6 h-6 text-industrial-accent" />
