@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import LogoPicture from '@/components/LogoPicture';
 
 const NAV_ITEMS = [
   { name: 'SERVICIOS', href: '#servicios' },
@@ -36,15 +36,11 @@ export default function Navbar() {
       <nav className="w-full px-6 md:px-8 flex items-center justify-between gap-4">
         {/* Logo */}
         <div className="flex items-center flex-1">
-          <Image
-            src="/LEGORO LOGO NO Background .png"
-            alt="LEGORO Logo"
-            width={200}
-            height={80}
-            className={`transition-all duration-300 object-contain ${
+          <LogoPicture
+            priority
+            imgClassName={`transition-all duration-300 object-contain ${
               isScrolled ? 'h-10 md:h-12 w-auto' : 'h-14 md:h-20 w-auto'
             }`}
-            priority
           />
         </div>
 
@@ -94,13 +90,7 @@ export default function Navbar() {
             className="fixed inset-0 z-50 bg-industrial-base/95 backdrop-blur-2xl h-screen flex flex-col p-8"
           >
             <div className="flex justify-between items-center mb-16">
-              <Image
-                src="/LEGORO LOGO NO Background .png"
-                alt="LEGORO Logo"
-                width={120}
-                height={40}
-                className="h-10 w-auto object-contain"
-              />
+              <LogoPicture imgClassName="h-10 w-auto object-contain" />
               <button
                 onClick={() => { setIsMenuOpen(false); window.dispatchEvent(new CustomEvent('legoro:menustate', { detail: false })); }}
                 className="p-3 bg-white/5 border border-white/10 rounded-2xl"

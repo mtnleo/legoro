@@ -51,10 +51,22 @@ export default function Hero() {
       >
         {/* Background */}
         <div className="absolute inset-0 z-0">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/City_Background.png')" }}
-          />
+          <picture className="absolute inset-0">
+            <source media="(max-width: 768px)" srcSet="/City_Background-sm.avif" type="image/avif" />
+            <source media="(max-width: 768px)" srcSet="/City_Background-sm.webp" type="image/webp" />
+            <source srcSet="/City_Background.avif" type="image/avif" />
+            <source srcSet="/City_Background.webp" type="image/webp" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/City_Background.png"
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              width="2752"
+              height="1536"
+              fetchPriority="high"
+              decoding="sync"
+            />
+          </picture>
           <div className="absolute inset-0 bg-industrial-base/60 backdrop-blur-sm" />
           <div className="absolute inset-0 bg-linear-to-b from-industrial-base/20 via-transparent to-industrial-base" />
         </div>

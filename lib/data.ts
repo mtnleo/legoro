@@ -80,7 +80,7 @@ export const TEAM: TeamMember[] = [
     linkedin: '#',
   },
   {
-    name: 'Juan Pedro González',
+    name: 'Leandro González',
     role: 'Ingeniero Electromecánico',
     linkedin: '#',
   },

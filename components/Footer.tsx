@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import LogoPicture from '@/components/LogoPicture';
 
 export default function Footer() {
   return (
@@ -10,13 +10,7 @@ export default function Footer() {
           <span className="hover:text-industrial-accent cursor-pointer transition-colors">TÉRMINOS TÉCNICOS</span>
         </div>
         <div className="flex items-center gap-4">
-          <Image
-            src="/LEGORO LOGO NO Background .png"
-            alt="LEGORO Logo"
-            width={80}
-            height={32}
-            className="h-8 w-auto opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all object-contain"
-          />
+          <LogoPicture imgClassName="h-8 w-auto opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all object-contain" />
         </div>
       </div>
     </footer>

@@ -3,7 +3,7 @@ import Hero from '@/components/Hero';
 import Servicios from '@/components/Servicios';
 import PorQueElegirnos from '@/components/PorQueElegirnos';
 import Equipo from '@/components/Equipo';
-import Contacto from '@/components/Contacto';
+import ContactoLazy from '@/components/ContactoLazy';
 import Footer from '@/components/Footer';
 
 export default function Page() {
@@ -15,7 +15,7 @@ export default function Page() {
         <Servicios />
         <PorQueElegirnos />
         <Equipo />
-        <Contacto />
+        <ContactoLazy />
       </main>
       <Footer />
     </div>

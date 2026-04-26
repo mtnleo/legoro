@@ -1,7 +1,4 @@
-'use client';
-
 import { ExternalLink, Zap } from 'lucide-react';
-import { motion } from 'motion/react';
 import { TEAM } from '@/lib/data';
 
 export default function Equipo() {
@@ -19,10 +16,9 @@ export default function Equipo() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {TEAM.map((member, idx) => (
-            <motion.div
+            <div
               key={idx}
-              whileHover={{ y: -10 }}
-              className="bg-industrial-surface rounded-4xl overflow-hidden border border-white/5 hover:border-industrial-accent transition-all duration-500 group flex flex-col items-center"
+              className="bg-industrial-surface rounded-4xl overflow-hidden border border-white/5 hover:border-industrial-accent hover:-translate-y-2.5 transition-all duration-300 group flex flex-col items-center"
             >
               <div className="w-full aspect-4/3 bg-industrial-navy/50 flex items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-linear-to-t from-industrial-base to-transparent opacity-60 z-10" />
@@ -52,7 +48,7 @@ export default function Equipo() {
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

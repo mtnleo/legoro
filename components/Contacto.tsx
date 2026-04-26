@@ -122,11 +122,12 @@ export default function Contacto() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block">
+                    <label htmlFor="form_company" className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block">
                       Empresa / Rol
                     </label>
                     <div className="relative">
                       <select
+                        id="form_company"
                         name="company"
                         required
                         className="w-full bg-white border border-[#0A1628]/10 rounded-[14px] p-4 text-[#0A1628] font-medium outline-none focus:border-[#B0BEC5] focus:ring-[3px] focus:ring-[#B0BEC5]/20 appearance-none transition-all duration-200"
@@ -153,11 +154,12 @@ export default function Contacto() {
                 </div>
 
                 <div>
-                  <label className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block">
+                  <label htmlFor='form_service_type' className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block">
                     Servicio de interés
                   </label>
                   <div className="relative">
                     <select
+                      id="form_service_type"
                       name="service_type"
                       required
                       className="w-full bg-white border border-[#0A1628]/10 rounded-[14px] p-4 text-[#0A1628] font-medium outline-none focus:border-[#B0BEC5] focus:ring-[3px] focus:ring-[#B0BEC5]/20 appearance-none transition-all duration-200"

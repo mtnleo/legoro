@@ -1,7 +1,4 @@
-'use client';
-
 import { Zap, Cpu, Shield, Thermometer, Layout, Sun, Battery } from 'lucide-react';
-import { motion } from 'motion/react';
 import { SERVICES } from '@/lib/data';
 
 const ICON_MAP: Record<string, React.ReactNode> = {
@@ -13,10 +10,6 @@ const ICON_MAP: Record<string, React.ReactNode> = {
   Sun:         <Sun         className="w-8 h-8 text-industrial-accent group-hover:text-industrial-base transition-colors" />,
   Battery:     <Battery     className="w-8 h-8 text-industrial-accent group-hover:text-industrial-base transition-colors" />,
 };
-
-function scrollToContact() {
-  document.querySelector('#contacto')?.scrollIntoView({ behavior: 'smooth' });
-}
 
 export default function Servicios() {
   return (
@@ -34,22 +27,18 @@ export default function Servicios() {
               Servicios para una infraestructura resiliente.
             </h3>
           </div>
-          <button
-            onClick={scrollToContact}
+          <a
+            href="#contacto"
             className="text-industrial-accent border-b-2 border-industrial-accent font-bold text-xs uppercase tracking-widest pb-1 hover:opacity-70 transition-opacity"
           >
             Consultar catálogo completo
-          </button>
+          </a>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {SERVICES.map((service, idx) => (
-            <motion.div
+          {SERVICES.map((service) => (
+            <div
               key={service.id}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.05 }}
               className="bg-industrial-surface p-10 rounded-[40px] border border-white/5 hover:bg-industrial-accent group transition-all duration-500"
             >
               <div className="mb-10 transform group-hover:scale-110 duration-500 origin-left">
@@ -61,7 +50,7 @@ export default function Servicios() {
               <p className="text-gray-400 group-hover:text-industrial-base/80 leading-relaxed text-xs transition-colors font-medium">
                 {service.description}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

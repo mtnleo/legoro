@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Plus_Jakarta_Sans, Space_Grotesk, Outfit, JetBrains_Mono } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans, Space_Grotesk, Outfit } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -26,12 +26,6 @@ const outfit = Outfit({
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "LEGORO — Ingeniería Eléctrica y Electromecánica | Mar del Plata",
   description:
@@ -48,11 +42,19 @@ export default function RootLayout({
     plusJakartaSans.variable,
     spaceGrotesk.variable,
     outfit.variable,
-    jetbrainsMono.variable,
   ].join(" ");
 
   return (
     <html lang="es" className={fontVars} data-scroll-behavior="smooth">
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/City_Background.avif"
+          type="image/avif"
+          fetchPriority="high"
+        />
+      </head>
       <body className="min-h-screen">{children}</body>
     </html>
   );
