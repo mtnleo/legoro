@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useId } from 'react';
+import { useState, useEffect, useCallback, useId, useRef } from 'react';
 import { Phone, MapPin, ChevronRight, CheckCircle2, Loader2, XCircle, X, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { SERVICES } from '@/lib/data';
@@ -38,6 +38,59 @@ const ALL_TOUCHED: Record<FieldName, boolean> = {
   service_type: true,
   description: true,
 };
+
+// --- Turnstile widget ---
+
+interface TurnstileWidgetProps {
+  siteKey: string;
+  onSuccess: (token: string) => void;
+  onExpire: () => void;
+  onError: () => void;
+}
+
+function TurnstileWidget({ siteKey, onSuccess, onExpire, onError }: TurnstileWidgetProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    let widgetId: string | undefined;
+
+    const render = (): boolean => {
+      if (!window.turnstile || !containerRef.current || widgetId) return false;
+      widgetId = window.turnstile.render(containerRef.current, {
+        sitekey: siteKey,
+        theme: 'light',
+        callback: onSuccess,
+        'expired-callback': onExpire,
+        'error-callback': onError,
+      });
+      return true;
+    };
+
+    if (render()) {
+      return () => { window.turnstile?.remove(widgetId); };
+    }
+
+    // Script aún no cargó — hacer polling hasta que esté disponible
+    const poll = setInterval(() => { if (render()) clearInterval(poll); }, 100);
+
+    // Si el script está bloqueado (ad-blocker), notificar después de 10s
+    const timeout = setTimeout(() => {
+      clearInterval(poll);
+      if (!widgetId) onError();
+    }, 10_000);
+
+    return () => {
+      clearInterval(poll);
+      clearTimeout(timeout);
+      window.turnstile?.remove(widgetId);
+    };
+  }, [siteKey, onSuccess, onExpire, onError]);
+
+  return <div ref={containerRef} />;
+}
+
+// --- Toast ---
 
 function ToastNotification({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }) {
   useEffect(() => {
@@ -88,14 +141,29 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
+// --- Main component ---
+
 export default function Contacto() {
   const [formStatus, setFormStatus] = useState<FormStatus>('idle');
   const [toast, setToast] = useState<Toast | null>(null);
   const [values, setValues] = useState<FormValues>(INITIAL_VALUES);
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState(false);
+  const [turnstileKey, setTurnstileKey] = useState(0);
   const uid = useId();
 
   const dismissToast = useCallback(() => setToast(null), []);
+
+  const handleTurnstileSuccess = useCallback((token: string) => {
+    setTurnstileToken(token);
+    setTurnstileError(false);
+  }, []);
+  const handleTurnstileExpire = useCallback(() => setTurnstileToken(null), []);
+  const handleTurnstileError = useCallback(() => {
+    setTurnstileToken(null);
+    setTurnstileError(true);
+  }, []);
 
   const parseResult = contactSchema.safeParse(values);
   const allErrors: Partial<Record<FieldName, string>> = parseResult.success
@@ -117,23 +185,36 @@ export default function Contacto() {
   const handleBlur = (name: FieldName) =>
     setTouched(prev => ({ ...prev, [name]: true }));
 
+  const resetTurnstile = () => {
+    setTurnstileKey(k => k + 1);
+    setTurnstileToken(null);
+  };
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setTouched(ALL_TOUCHED);
     if (!isFormValid) return;
 
+    if (!turnstileToken) {
+      setTurnstileError(true);
+      return;
+    }
+
     setFormStatus('submitting');
     const formData = new FormData();
     (Object.entries(values) as [string, string][]).forEach(([k, v]) => formData.append(k, v));
+    formData.append('cf_turnstile_response', turnstileToken);
 
     const result = await submitContactForm(formData);
     if (result.success) {
       setFormStatus('success');
       setValues(INITIAL_VALUES);
       setTouched({});
+      resetTurnstile();
       setToast({ type: 'success', message: '¡Solicitud enviada! Te contactamos en menos de 24hs.' });
     } else {
       setFormStatus('error');
+      resetTurnstile();
       setToast({ type: 'error', message: 'Hubo un error al enviar. Por favor, intentá de nuevo.' });
       setTimeout(() => setFormStatus('idle'), 3000);
     }
@@ -328,6 +409,23 @@ export default function Contacto() {
                     placeholder="Describí brevemente tu necesidad técnica..."
                   />
                   <FieldError id={errorId('description')} message={visibleError('description')} />
+                </div>
+
+                {/* Turnstile CAPTCHA */}
+                <div>
+                  <TurnstileWidget
+                    key={turnstileKey}
+                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                    onSuccess={handleTurnstileSuccess}
+                    onExpire={handleTurnstileExpire}
+                    onError={handleTurnstileError}
+                  />
+                  {turnstileError && (
+                    <p role="alert" className="mt-1.5 flex items-center gap-1.5 text-xs text-red-600 font-medium">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                      Por favor, completá la verificación de seguridad.
+                    </p>
+                  )}
                 </div>
 
                 <motion.button

@@ -3,7 +3,36 @@
 import { supabase } from '@/lib/supabase';
 import { contactSchema } from '@/lib/contactSchema';
 
+async function verifyTurnstile(token: string): Promise<boolean> {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    console.error('[turnstile] TURNSTILE_SECRET_KEY no configurada');
+    return false;
+  }
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret, response: token }).toString(),
+    });
+    const json = await res.json() as { success: boolean };
+    return json.success === true;
+  } catch (err) {
+    console.error('[turnstile] Error verificando →', err);
+    return false;
+  }
+}
+
 export async function submitContactForm(data: FormData) {
+  const token = data.get('cf_turnstile_response');
+  if (!token || typeof token !== 'string') {
+    return { success: false, error: 'Verificación de seguridad requerida.' };
+  }
+  if (!(await verifyTurnstile(token))) {
+    console.error('[contact_leads] Turnstile verification failed');
+    return { success: false, error: 'Verificación de seguridad fallida. Intentá de nuevo.' };
+  }
+
   const raw = {
     full_name:    data.get('full_name'),
     company:      data.get('company'),
