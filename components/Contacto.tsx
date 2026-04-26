@@ -190,9 +190,7 @@ export default function Contacto() {
     setTurnstileToken(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
+  const doSubmit = async () => {
     setTouched(ALL_TOUCHED);
     if (!isFormValid) return;
 
@@ -219,6 +217,11 @@ export default function Contacto() {
       setToast({ type: 'error', message: 'Hubo un error al enviar. Por favor, intentá de nuevo.' });
       setTimeout(() => setFormStatus('idle'), 3000);
     }
+  };
+
+  const handleSubmit = (e: React.BaseSyntheticEvent) => {
+    e.preventDefault();
+    void doSubmit();
   };
 
   const inputClass = (name: FieldName) => {
