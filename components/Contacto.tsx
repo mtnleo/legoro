@@ -269,205 +269,215 @@ export default function Contacto() {
             </div>
 
             {/* Right panel — form */}
-            <div className="lg:w-1/2 p-8 md:p-20 bg-[#EEF1F3]">
+            <div className="lg:w-1/2 p-8 md:p-20 bg-[#EEF1F3] flex flex-col gap-6">
+              {/*
+                display:contents makes the <form> box-less so its children become
+                direct flex items of this panel — enabling CSS order to place the
+                TurnstileWidget (a sibling outside the form) between the fields and
+                the button without changing the visual layout.
+              */}
               <form
                 onSubmit={handleSubmit}
                 noValidate
                 aria-label="Formulario de contacto"
-                className="space-y-6"
+                className="contents"
               >
-                {/* Full name */}
-                <div>
-                  <label
-                    htmlFor={fieldId('full_name')}
-                    className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
-                  >
-                    Nombre Completo{' '}
-                    <span aria-hidden="true" className="text-red-500">*</span>
-                  </label>
-                  <input
-                    id={fieldId('full_name')}
-                    type="text"
-                    name="full_name"
-                    value={values.full_name}
-                    onChange={e => handleChange('full_name', e.target.value)}
-                    onBlur={() => handleBlur('full_name')}
-                    aria-required="true"
-                    aria-invalid={!!visibleError('full_name') || undefined}
-                    aria-describedby={visibleError('full_name') ? errorId('full_name') : undefined}
-                    autoComplete="name"
-                    className={inputClass('full_name')}
-                    placeholder="Ej: Juan Pérez"
-                  />
-                  <FieldError id={errorId('full_name')} message={visibleError('full_name')} />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Company */}
+                <div className="space-y-6 order-1">
+                  {/* Full name */}
                   <div>
                     <label
-                      htmlFor={fieldId('company')}
+                      htmlFor={fieldId('full_name')}
                       className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
                     >
-                      Empresa / Rol{' '}
+                      Nombre Completo{' '}
+                      <span aria-hidden="true" className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id={fieldId('full_name')}
+                      type="text"
+                      name="full_name"
+                      value={values.full_name}
+                      onChange={e => handleChange('full_name', e.target.value)}
+                      onBlur={() => handleBlur('full_name')}
+                      aria-required="true"
+                      aria-invalid={!!visibleError('full_name') || undefined}
+                      aria-describedby={visibleError('full_name') ? errorId('full_name') : undefined}
+                      autoComplete="name"
+                      className={inputClass('full_name')}
+                      placeholder="Ej: Juan Pérez"
+                    />
+                    <FieldError id={errorId('full_name')} message={visibleError('full_name')} />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Company */}
+                    <div>
+                      <label
+                        htmlFor={fieldId('company')}
+                        className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
+                      >
+                        Empresa / Rol{' '}
+                        <span aria-hidden="true" className="text-red-500">*</span>
+                      </label>
+                      <div className="relative">
+                        <select
+                          id={fieldId('company')}
+                          name="company"
+                          value={values.company}
+                          onChange={e => handleChange('company', e.target.value)}
+                          onBlur={() => handleBlur('company')}
+                          aria-required="true"
+                          aria-invalid={!!visibleError('company') || undefined}
+                          aria-describedby={visibleError('company') ? errorId('company') : undefined}
+                          className={`${inputClass('company')} appearance-none`}
+                        >
+                          <option value="" disabled>Seleccioná una opción</option>
+                          {COMPANY_OPTIONS.map(opt => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                        <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A1628]/50 rotate-90 pointer-events-none" aria-hidden="true" />
+                      </div>
+                      <FieldError id={errorId('company')} message={visibleError('company')} />
+                    </div>
+
+                    {/* Phone */}
+                    <div>
+                      <label
+                        htmlFor={fieldId('phone_number')}
+                        className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
+                      >
+                        Teléfono{' '}
+                        <span aria-hidden="true" className="text-red-500">*</span>
+                      </label>
+                      <input
+                        id={fieldId('phone_number')}
+                        type="tel"
+                        name="phone_number"
+                        inputMode="tel"
+                        value={values.phone_number}
+                        onChange={e => handleChange('phone_number', e.target.value)}
+                        onBlur={() => handleBlur('phone_number')}
+                        aria-required="true"
+                        aria-invalid={!!visibleError('phone_number') || undefined}
+                        aria-describedby={visibleError('phone_number') ? errorId('phone_number') : undefined}
+                        autoComplete="tel"
+                        className={inputClass('phone_number')}
+                        placeholder="+54 9 ..."
+                      />
+                      <FieldError id={errorId('phone_number')} message={visibleError('phone_number')} />
+                    </div>
+                  </div>
+
+                  {/* Service type */}
+                  <div>
+                    <label
+                      htmlFor={fieldId('service_type')}
+                      className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
+                    >
+                      Servicio de interés{' '}
                       <span aria-hidden="true" className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                       <select
-                        id={fieldId('company')}
-                        name="company"
-                        value={values.company}
-                        onChange={e => handleChange('company', e.target.value)}
-                        onBlur={() => handleBlur('company')}
+                        id={fieldId('service_type')}
+                        name="service_type"
+                        value={values.service_type}
+                        onChange={e => handleChange('service_type', e.target.value)}
+                        onBlur={() => handleBlur('service_type')}
                         aria-required="true"
-                        aria-invalid={!!visibleError('company') || undefined}
-                        aria-describedby={visibleError('company') ? errorId('company') : undefined}
-                        className={`${inputClass('company')} appearance-none`}
+                        aria-invalid={!!visibleError('service_type') || undefined}
+                        aria-describedby={visibleError('service_type') ? errorId('service_type') : undefined}
+                        className={`${inputClass('service_type')} appearance-none`}
                       >
-                        <option value="" disabled>Seleccioná una opción</option>
-                        {COMPANY_OPTIONS.map(opt => (
-                          <option key={opt} value={opt}>{opt}</option>
+                        {SERVICES.map(s => (
+                          <option key={s.id} value={s.id}>{s.title}</option>
                         ))}
+                        <option value="otro">Otro / Consulta General</option>
                       </select>
                       <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A1628]/50 rotate-90 pointer-events-none" aria-hidden="true" />
                     </div>
-                    <FieldError id={errorId('company')} message={visibleError('company')} />
+                    <FieldError id={errorId('service_type')} message={visibleError('service_type')} />
                   </div>
 
-                  {/* Phone */}
+                  {/* Description (optional) */}
                   <div>
                     <label
-                      htmlFor={fieldId('phone_number')}
+                      htmlFor={fieldId('description')}
                       className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
                     >
-                      Teléfono{' '}
-                      <span aria-hidden="true" className="text-red-500">*</span>
+                      Mensaje
                     </label>
-                    <input
-                      id={fieldId('phone_number')}
-                      type="tel"
-                      name="phone_number"
-                      inputMode="tel"
-                      value={values.phone_number}
-                      onChange={e => handleChange('phone_number', e.target.value)}
-                      onBlur={() => handleBlur('phone_number')}
-                      aria-required="true"
-                      aria-invalid={!!visibleError('phone_number') || undefined}
-                      aria-describedby={visibleError('phone_number') ? errorId('phone_number') : undefined}
-                      autoComplete="tel"
-                      className={inputClass('phone_number')}
-                      placeholder="+54 9 ..."
+                    <textarea
+                      id={fieldId('description')}
+                      name="description"
+                      value={values.description}
+                      onChange={e => handleChange('description', e.target.value)}
+                      onBlur={() => handleBlur('description')}
+                      aria-describedby={visibleError('description') ? errorId('description') : undefined}
+                      rows={4}
+                      className={`${inputClass('description')} resize-none`}
+                      placeholder="Describí brevemente tu necesidad técnica..."
                     />
-                    <FieldError id={errorId('phone_number')} message={visibleError('phone_number')} />
+                    <FieldError id={errorId('description')} message={visibleError('description')} />
                   </div>
                 </div>
 
-                {/* Service type */}
-                <div>
-                  <label
-                    htmlFor={fieldId('service_type')}
-                    className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
+                <div className="order-3">
+                  <motion.button
+                    whileHover={{ scale: formStatus === 'submitting' ? 1 : 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    type="button"
+                    onClick={() => void doSubmit()}
+                    disabled={formStatus === 'submitting' || formStatus === 'success'}
+                    aria-label={
+                      formStatus === 'submitting' ? 'Enviando solicitud…' :
+                      formStatus === 'success' ? 'Solicitud enviada correctamente' :
+                      'Enviar solicitud de contacto'
+                    }
+                    className={`w-full p-6 rounded-[14px] font-black uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 ${
+                      formStatus === 'success'
+                        ? 'bg-green-600 text-white cursor-default'
+                        : formStatus === 'error'
+                        ? 'bg-red-600 text-white'
+                        : 'bg-[#0A1628] text-[#EEF1F3] hover:bg-[#B0BEC5] hover:text-[#0A1628] hover:shadow-[0_8px_30px_rgba(10,22,40,0.2)]'
+                    }`}
                   >
-                    Servicio de interés{' '}
-                    <span aria-hidden="true" className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <select
-                      id={fieldId('service_type')}
-                      name="service_type"
-                      value={values.service_type}
-                      onChange={e => handleChange('service_type', e.target.value)}
-                      onBlur={() => handleBlur('service_type')}
-                      aria-required="true"
-                      aria-invalid={!!visibleError('service_type') || undefined}
-                      aria-describedby={visibleError('service_type') ? errorId('service_type') : undefined}
-                      className={`${inputClass('service_type')} appearance-none`}
-                    >
-                      {SERVICES.map(s => (
-                        <option key={s.id} value={s.id}>{s.title}</option>
-                      ))}
-                      <option value="otro">Otro / Consulta General</option>
-                    </select>
-                    <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A1628]/50 rotate-90 pointer-events-none" aria-hidden="true" />
-                  </div>
-                  <FieldError id={errorId('service_type')} message={visibleError('service_type')} />
+                    {formStatus === 'idle' && (
+                      <>
+                        ENVIAR SOLICITUD
+                        <ChevronRight className="w-6 h-6" aria-hidden="true" />
+                      </>
+                    )}
+                    {formStatus === 'submitting' && (
+                      <Loader2 className="w-8 h-8 animate-spin" aria-hidden="true" />
+                    )}
+                    {formStatus === 'success' && (
+                      <><CheckCircle2 className="w-8 h-8" aria-hidden="true" /> SOLICITUD ENVIADA</>
+                    )}
+                    {formStatus === 'error' && (
+                      <><XCircle className="w-8 h-8" aria-hidden="true" /> ERROR — INTENTÁ DE NUEVO</>
+                    )}
+                  </motion.button>
                 </div>
-
-                {/* Description (optional) */}
-                <div>
-                  <label
-                    htmlFor={fieldId('description')}
-                    className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
-                  >
-                    Mensaje
-                  </label>
-                  <textarea
-                    id={fieldId('description')}
-                    name="description"
-                    value={values.description}
-                    onChange={e => handleChange('description', e.target.value)}
-                    onBlur={() => handleBlur('description')}
-                    aria-describedby={visibleError('description') ? errorId('description') : undefined}
-                    rows={4}
-                    className={`${inputClass('description')} resize-none`}
-                    placeholder="Describí brevemente tu necesidad técnica..."
-                  />
-                  <FieldError id={errorId('description')} message={visibleError('description')} />
-                </div>
-
-                {/* Turnstile CAPTCHA */}
-                <div>
-                  <TurnstileWidget
-                    key={turnstileKey}
-                    siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
-                    onSuccess={handleTurnstileSuccess}
-                    onExpire={handleTurnstileExpire}
-                    onError={handleTurnstileError}
-                  />
-                  {turnstileError && (
-                    <p role="alert" className="mt-1.5 flex items-center gap-1.5 text-xs text-red-600 font-medium">
-                      <AlertCircle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
-                      Por favor, completá la verificación de seguridad.
-                    </p>
-                  )}
-                </div>
-
-                <motion.button
-                  whileHover={{ scale: formStatus === 'submitting' ? 1 : 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="button"
-                  onClick={() => void doSubmit()}
-                  disabled={formStatus === 'submitting' || formStatus === 'success'}
-                  aria-label={
-                    formStatus === 'submitting' ? 'Enviando solicitud…' :
-                    formStatus === 'success' ? 'Solicitud enviada correctamente' :
-                    'Enviar solicitud de contacto'
-                  }
-                  className={`w-full p-6 rounded-[14px] font-black uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 ${
-                    formStatus === 'success'
-                      ? 'bg-green-600 text-white cursor-default'
-                      : formStatus === 'error'
-                      ? 'bg-red-600 text-white'
-                      : 'bg-[#0A1628] text-[#EEF1F3] hover:bg-[#B0BEC5] hover:text-[#0A1628] hover:shadow-[0_8px_30px_rgba(10,22,40,0.2)]'
-                  }`}
-                >
-                  {formStatus === 'idle' && (
-                    <>
-                      ENVIAR SOLICITUD
-                      <ChevronRight className="w-6 h-6" aria-hidden="true" />
-                    </>
-                  )}
-                  {formStatus === 'submitting' && (
-                    <Loader2 className="w-8 h-8 animate-spin" aria-hidden="true" />
-                  )}
-                  {formStatus === 'success' && (
-                    <><CheckCircle2 className="w-8 h-8" aria-hidden="true" /> SOLICITUD ENVIADA</>
-                  )}
-                  {formStatus === 'error' && (
-                    <><XCircle className="w-8 h-8" aria-hidden="true" /> ERROR — INTENTÁ DE NUEVO</>
-                  )}
-                </motion.button>
               </form>
+
+              {/* Turnstile CAPTCHA — outside <form>, visually between fields and button */}
+              <div className="order-2">
+                <TurnstileWidget
+                  key={turnstileKey}
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                  onSuccess={handleTurnstileSuccess}
+                  onExpire={handleTurnstileExpire}
+                  onError={handleTurnstileError}
+                />
+                {turnstileError && (
+                  <p role="alert" className="mt-1.5 flex items-center gap-1.5 text-xs text-red-600 font-medium">
+                    <AlertCircle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+                    Por favor, completá la verificación de seguridad.
+                  </p>
+                )}
+              </div>
             </div>
 
           </div>
