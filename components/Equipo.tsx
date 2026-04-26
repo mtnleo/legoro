@@ -41,6 +41,7 @@ export default function Equipo() {
                 </p>
                 <div className="mt-6 flex justify-center gap-4">
                   <a
+                    aria-label={`LinkedIn de ${member.name}`}
                     href={member.linkedin}
                     className="p-2 bg-white/5 rounded-full hover:bg-industrial-accent hover:text-industrial-base transition-all"
                   >
