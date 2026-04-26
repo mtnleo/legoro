@@ -190,8 +190,9 @@ export default function Contacto() {
     setTurnstileToken(null);
   };
 
-  const handleSubmit = async (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
     setTouched(ALL_TOUCHED);
     if (!isFormValid) return;
 
