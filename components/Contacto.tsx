@@ -435,7 +435,8 @@ export default function Contacto() {
                 <motion.button
                   whileHover={{ scale: formStatus === 'submitting' ? 1 : 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  type="submit"
+                  type="button"
+                  onClick={() => void doSubmit()}
                   disabled={formStatus === 'submitting' || formStatus === 'success'}
                   aria-label={
                     formStatus === 'submitting' ? 'Enviando solicitud…' :
