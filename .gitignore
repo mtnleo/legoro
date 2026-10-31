@@ -43,3 +43,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Astro static output and generated types
+/dist/
+/.astro/
+
+# Local Cloudflare state, caches and development secrets
+/.wrangler/
+.cache/
+.npm-cache/
+.dev.vars*
+
+# macOS AppleDouble metadata (never publish)
+._*
