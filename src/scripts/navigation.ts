@@ -2,18 +2,13 @@ export {};
 const header = document.querySelector<HTMLElement>('#site-header')!;
 const menu = document.querySelector<HTMLElement>('#mobile-menu')!;
 const opener = document.querySelector<HTMLButtonElement>('#menu-open')!;
-const cta = document.querySelector<HTMLElement>('#mobile-cta')!;
-const contact = document.querySelector<HTMLElement>('#contacto')!;
 let menuOpen = false;
-let contactVisible = false;
 let previousOverflow = '';
-const updateCta = () => { cta.hidden = menuOpen || contactVisible || window.scrollY <= 400; };
 function closeMenu(restoreFocus = true) {
   menuOpen = false;
   menu.hidden = true;
   opener.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = previousOverflow;
-  updateCta();
   if (restoreFocus) opener.focus();
 }
 opener.addEventListener('click', () => {
@@ -22,7 +17,6 @@ opener.addEventListener('click', () => {
   menu.hidden = false;
   document.body.style.overflow = 'hidden';
   opener.setAttribute('aria-expanded', 'true');
-  updateCta();
   menu.querySelector<HTMLButtonElement>('button')?.focus();
 });
 menu.querySelectorAll<HTMLElement>('[data-menu-close]').forEach(control => {
@@ -49,11 +43,6 @@ function onScroll() {
   const scrolled = window.scrollY > 20;
   header.classList.toggle('is-scrolled', scrolled);
   header.classList.toggle('glass', scrolled);
-  updateCta();
 }
 window.addEventListener('scroll', onScroll, { passive: true });
-new IntersectionObserver(([entry]) => {
-  contactVisible = entry.isIntersecting;
-  updateCta();
-}, { threshold: 0 }).observe(contact);
 onScroll();

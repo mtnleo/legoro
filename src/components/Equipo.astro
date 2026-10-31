@@ -1,6 +1,17 @@
 ---
-import { ExternalLink, Zap } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import ezequielPortrait from '../assets/team/ezequiel-leonardi.jpeg';
+import matiasPortrait from '../assets/team/matias-rocca.jpeg';
+import leandroPortrait from '../assets/team/leandro-gonzalez.jpeg';
 import { TEAM } from '@/lib/data';
+
+const portraits: Record<string, ImageMetadata> = {
+  'Ezequiel Leonardi': ezequielPortrait,
+  'Matías Rocca': matiasPortrait,
+  'Leandro González': leandroPortrait,
+};
 ---
 <section id="equipo" class="py-24 md:py-32 bg-white/2 border-y border-white/5">
       <div class="container mx-auto px-6 md:px-8">
@@ -18,14 +29,18 @@ import { TEAM } from '@/lib/data';
             <div
               class="bg-industrial-surface rounded-4xl overflow-hidden border border-white/5 hover:border-industrial-accent hover:-translate-y-2.5 transition-all duration-300 group flex flex-col items-center"
             >
-              <div class="w-full aspect-4/3 bg-industrial-navy/50 flex items-center justify-center relative overflow-hidden">
-                <div class="absolute inset-0 bg-linear-to-t from-industrial-base to-transparent opacity-60 z-10" />
-                <span class="text-6xl font-black opacity-10 group-hover:scale-110 transition-transform duration-700">
-                  {member.name.split(' ').map((n) => n[0]).join('')}
-                </span>
-                <div class="absolute bottom-6 left-6 z-20">
-                  <Zap className="w-6 h-6 text-industrial-accent opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
+              <div class="w-full aspect-4/3 bg-industrial-navy/50 relative overflow-hidden">
+                <Image
+                  src={portraits[member.name]}
+                  alt={`Retrato de ${member.name}`}
+                  width={800}
+                  widths={[320, 480, 640, 800, 1200]}
+                  sizes="(min-width: 1536px) 469px, (min-width: 1280px) 384px, (min-width: 1024px) 299px, (min-width: 768px) 213px, calc(100vw - 48px)"
+                  format="webp"
+                  loading="lazy"
+                  decoding="async"
+                  class="absolute inset-0 h-full w-full object-cover object-top"
+                />
               </div>
 
               <div class="p-8 text-center w-full">

@@ -72,16 +72,16 @@ export const TEAM: TeamMember[] = [
   {
     name: 'Ezequiel Leonardi',
     role: 'Ingeniero Electromecánico',
-    linkedin: '#',
+    linkedin: 'https://www.linkedin.com/in/ezequiel-leonardi/',
   },
   {
     name: 'Matías Rocca',
-    role: 'Ingeniero Electromecánico',
-    linkedin: '#',
+    role: 'Técnico Electromecánico',
+    linkedin: 'https://www.linkedin.com/in/matias-rocca-a89465266/',
   },
   {
     name: 'Leandro González',
-    role: 'Ingeniero Electromecánico',
-    linkedin: '#',
+    role: 'Técnico Electromecánico',
+    linkedin: 'https://www.linkedin.com/in/leandro-gonzalez-753327274/',
   },
 ];
