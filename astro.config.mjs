@@ -1,4 +1,4 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
-export default defineConfig({ output: 'static', integrations: [react()], vite: { plugins: [tailwindcss()] } });
+export default defineConfig({ site: 'https://legoro.pages.dev', output: 'static', integrations: [react()], vite: { plugins: [tailwindcss()] } });

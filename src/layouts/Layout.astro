@@ -5,5 +5,7 @@ import '@fontsource-variable/space-grotesk/wght.css';
 import '@fontsource-variable/outfit/wght.css';
 import '../styles/global.css';
 const { title = 'LEGORO — Ingeniería Eléctrica y Electromecánica | Mar del Plata', description = 'Mediciones eléctricas, instalaciones, termografía y energía solar en Mar del Plata, Buenos Aires. Presupuesto técnico en 24hs.' } = Astro.props;
+const isNotFound = /^\/404(?:\.html|\/)?$/.test(Astro.url.pathname);
+const canonicalURL = isNotFound ? undefined : new URL(Astro.url.pathname, Astro.site);
 ---
-<!doctype html><html lang="es" data-scroll-behavior="smooth"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>{title}</title><meta name="description" content={description} /><link rel="icon" href="/favicon.ico" /></head><body class="min-h-screen"><slot /></body></html>
+<!doctype html><html lang="es" data-scroll-behavior="smooth"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>{title}</title><meta name="description" content={description} />{canonicalURL && <link rel="canonical" href={canonicalURL} />}{isNotFound && <meta name="robots" content="noindex" />}<link rel="icon" href="/favicon.ico" /></head><body class="min-h-screen"><slot /></body></html>

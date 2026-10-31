@@ -14,8 +14,9 @@
     "preview": "astro preview --host 127.0.0.1",
     "check": "astro check",
     "test:contact": "node --test tests/contact.test.ts",
+    "test:seo": "node --test tests/seo.test.ts",
     "test:static": "node --test tests/static.test.ts",
-    "test": "npm run test:contact && node --test tests/captcha-layout.test.ts tests/captcha-lifecycle.test.ts tests/contact-presentation.test.ts && npm run test:static"
+    "test": "npm run test:contact && node --test tests/captcha-layout.test.ts tests/captcha-lifecycle.test.ts tests/contact-presentation.test.ts && npm run test:static && npm run test:seo"
   },
   "dependencies": {
     "@astrojs/react": "7.1.2",
