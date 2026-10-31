@@ -1,58 +1,27 @@
----
-import { CheckCircle2, Cpu, Layout, Zap } from 'lucide-react';
-
-const FEATURES = [
-  {
-    title: 'Ingenieros habilitados para firmar proyectos',
-    desc: 'Ingenieros con firma autorizada para certificaciones.',
-    icon: CheckCircle2,
-  },
-  {
-    title: 'Tecnología',
-    desc: 'Equipamiento de diagnóstico calibrado anualmente.',
-    icon: Cpu,
-  },
-  {
-    title: 'A Medida',
-    desc: 'Analizamos cada proyecto desde cero para ahorrar costos.',
-    icon: Layout,
-  },
-  {
-    title: 'Rapidez',
-    desc: 'Despacho de personal técnico en tiempo récord.',
-    icon: Zap,
-  },
-];
----
-<section id="elegirnos" class="py-24 md:py-32 bg-industrial-base relative z-10">
-      <div class="container mx-auto px-6 md:px-12">
-        <div class="mb-16">
-          <h2 class="text-3xl md:text-5xl font-black mb-4 tracking-tighter font-display uppercase italic">
-            Por qué elegirnos
-          </h2>
-          <p class="text-white/60 text-lg font-jakarta font-normal">
-            Experiencia técnica real, compromiso con cada proyecto.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {FEATURES.map((item, idx) => { const Icon = item.icon; return (
-            <div
-              class="relative overflow-hidden p-8 rounded-3xl border border-industrial-accent/15 bg-white/5 hover:border-industrial-accent/40 transition-all duration-300 hover:-translate-y-1 group"
-            >
-              <div class="absolute right-4 bottom-4 text-[8rem] font-black opacity-[0.06] select-none pointer-events-none font-display leading-none">
-                0{idx + 1}
-              </div>
-
-              <div class="relative z-10">
-                <div class="w-14 h-14 rounded-full bg-industrial-accent/15 flex items-center justify-center mb-6 text-industrial-accent">
-                  <Icon className="w-6 h-6 text-industrial-accent" />
-                </div>
-                <h3 class="font-jakarta font-bold text-[1.1rem] text-white mb-2">{item.title}</h3>
-                <p class="font-jakarta font-normal text-white/70 leading-relaxed text-sm md:text-base">{item.desc}</p>
-              </div>
-            </div>
-          ); })}
-        </div>
-      </div>
-    </section>
+<section id="elegirnos" aria-labelledby="approach-heading" class="approach-section">
+  <div class="approach-inner">
+    <div class="approach-intro">
+      <h2 id="approach-heading">Trabajamos desde Mar del Plata</h2>
+      <p>Estamos en Mar del Plata y trabajamos en proyectos de la ciudad y otras localidades.</p>
+      <a href="#equipo">Conocé al equipo</a>
+    </div>
+    <div class="approach-details">
+      <h3>Hablemos de tu proyecto</h3>
+      <p>Contanos dónde está tu proyecto y en qué etapa se encuentra. Podés escribirnos por WhatsApp, llamar o completar el formulario.</p>
+      <a href="tel:+5492235768622">+54 9 2235 76-8622</a>
+      <a href="#contacto">Ir al formulario de consulta</a>
+    </div>
+  </div>
+</section>
+<style>
+  .approach-section { background: var(--color-industrial-navy); color: oklch(97% .008 245); padding: 5rem 1.5rem; }
+  .approach-inner { max-width: 80rem; margin-inline: auto; display: grid; gap: 3rem; }
+  h2 { font-family: var(--font-space-grotesk); font-size: clamp(2rem, 3.4vw, 3rem); font-weight: 500; line-height: 1.2; letter-spacing: -.025em; max-width: 19ch; text-wrap: balance; }
+  p { font-size: 1rem; line-height: 1.8; color: oklch(85% .015 245); max-width: 52ch; margin-top: 1rem; }
+  h3 { font-family: var(--font-plus-jakarta-sans); font-size: 1.15rem; line-height: 1.45; font-weight: 600; }
+  .approach-details { padding-top: 1.75rem; border-top: 1px solid oklch(42% .025 255); }
+  a { display: flex; width: fit-content; align-items: center; min-height: 44px; margin-top: .5rem; text-decoration: underline; text-underline-offset: .3em; }
+  .approach-intro a { margin-top: 1rem; }
+  a:focus-visible { outline: 2px solid var(--color-industrial-accent); outline-offset: 5px; }
+  @media (min-width: 1024px) { .approach-section { padding: 6rem 2rem; } .approach-inner { grid-template-columns: 1fr 1fr; gap: 6rem; } }
+</style>

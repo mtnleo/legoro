@@ -54,8 +54,32 @@ test('share metadata uses each page title/description and a real 1200x630 produc
     }
     assert.match(html, /property="og:image:width" content="1200"/);
     assert.match(html, /property="og:image:height" content="630"/);
-    assert.match(html, /property="og:image:alt" content="LEGORO:/);
+    assert.match(html, /property="og:image:alt" content="LEGORO\./);
     assert.match(html, /name="twitter:card" content="summary_large_image"/);
   }
   assert.doesNotMatch(readBuilt('404.html'), /property="og:|name="twitter:/);
+});
+
+test('homepage search and share copy describe the approved scope without response-time promises', () => {
+  const html = readBuilt('index.html');
+  assert.match(html, /<title>LEGORO \| Ingeniería eléctrica en Mar del Plata<\/title>/);
+  assert.match(html, /Ingenieros electromecánicos en Mar del Plata/);
+  assert.doesNotMatch(html, /24hs|24h|24 horas|a medida|habilitados para firmar/i);
+});
+
+test('page prose and titles avoid dash separators and use the actual LEGORO favicon', () => {
+  for (const path of ['index.html', 'privacidad/index.html', '404.html']) {
+    const html = readBuilt(path);
+    assert.doesNotMatch(html, /[\u2013\u2014]/);
+    assert.ok(html.includes('href="/favicon.ico" type="image/x-icon"'));
+    assert.ok(html.includes('href="/favicon.png" type="image/png" sizes="256x256"'));
+  }
+  const png = readFileSync(new URL('../dist/favicon.png', import.meta.url));
+  assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
+  assert.equal(png.readUInt32BE(16), 256);
+  assert.equal(png.readUInt32BE(20), 256);
+  const ico = readFileSync(new URL('../dist/favicon.ico', import.meta.url));
+  assert.equal(ico.readUInt16LE(2), 1);
+  assert.equal(ico.readUInt16LE(4), 5);
+  assert.doesNotMatch(readBuilt('index.html'), /TÉRMINOS TÉCNICOS/);
 });

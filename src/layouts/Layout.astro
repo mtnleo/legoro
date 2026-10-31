@@ -1,14 +1,12 @@
 ---
-import '@fontsource-variable/inter/wght.css';
 import '@fontsource-variable/plus-jakarta-sans/wght.css';
 import '@fontsource-variable/space-grotesk/wght.css';
-import '@fontsource-variable/outfit/wght.css';
 import '../styles/global.css';
-const { title = 'LEGORO — Ingeniería Eléctrica y Electromecánica | Mar del Plata', description = 'Mediciones eléctricas, instalaciones, termografía y energía solar en Mar del Plata, Buenos Aires. Presupuesto técnico en 24hs.' } = Astro.props;
+const { title = 'LEGORO | Ingeniería eléctrica en Mar del Plata', description = 'Ingenieros electromecánicos en Mar del Plata. Instalaciones eléctricas, eficiencia energética y automatización para proyectos de la ciudad y otras localidades.' } = Astro.props;
 const isNotFound = /^\/404(?:\.html|\/)?$/.test(Astro.url.pathname);
 const canonicalURL = isNotFound ? undefined : new URL(Astro.url.pathname, Astro.site);
 const shareImageURL = new URL('/og-legoro.png', Astro.site);
-const shareImageAlt = 'LEGORO: ingeniería eléctrica en Mar del Plata, con una vista nocturna de la ciudad.';
+const shareImageAlt = 'LEGORO. Ingeniería eléctrica en Mar del Plata sobre una vista nocturna de la ciudad.';
 ---
 <!doctype html><html lang="es" data-scroll-behavior="smooth"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>{title}</title><meta name="description" content={description} />{canonicalURL && <link rel="canonical" href={canonicalURL} />}{isNotFound && <meta name="robots" content="noindex" />}{canonicalURL && <>
 <meta property="og:type" content="website" />
@@ -28,4 +26,4 @@ const shareImageAlt = 'LEGORO: ingeniería eléctrica en Mar del Plata, con una 
 <meta name="twitter:image" content={shareImageURL} />
 <meta name="twitter:image:alt" content={shareImageAlt} />
 </>}
-<link rel="icon" href="/favicon.ico" /></head><body class="min-h-screen"><slot /></body></html>
+<link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="16x16 32x32 48x48 64x64 256x256" /><link rel="icon" href="/favicon.png" type="image/png" sizes="256x256" /></head><body class="min-h-screen"><slot /></body></html>

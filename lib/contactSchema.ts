@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { SERVICES } from './data.ts';
 
 export const COMPANY_OPTIONS = ['Empresa / Industria', 'PyME', 'Particular'] as const;
+export const DEFAULT_SERVICE_ID = SERVICES[0].id;
 export const SERVICE_ID_LIST = [...SERVICES.map(s => s.id), 'otro'];
 
 export const contactSchema = z.object({

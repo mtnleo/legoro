@@ -9,11 +9,11 @@ import { Phone, Mail, MapPin } from "lucide-react";
               <div class="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-size-[24px_24px] pointer-events-none" aria-hidden="true" />
 
               <div class="relative z-10 w-full flex flex-col items-center lg:items-start">
-                <h2 id="contacto-heading" class="font-jakarta font-black italic uppercase text-[#EEF1F3] contact-heading leading-none mb-6 text-center lg:text-left w-full">
-                  Empecemos
+                <h2 id="contacto-heading" class="font-jakarta font-semibold text-[#EEF1F3] contact-heading leading-tight mb-6 text-center lg:text-left w-full">
+                  Consultanos
                 </h2>
                 <p class="font-jakarta font-normal text-[#EEF1F3]/60 text-base max-w-md text-center lg:text-left w-full">
-                  Envianos tu consulta y recibí un presupuesto técnico detallado en menos de 24hs.
+                  Dejanos tu consulta en el formulario o escribinos por WhatsApp. También podés llamarnos o enviarnos un correo.
                 </p>
               </div>
 
@@ -39,8 +39,12 @@ import { Phone, Mail, MapPin } from "lucide-react";
   .contact-intro { container-type: inline-size; }
   .contact-heading {
     /* Size against this panel, not the viewport when the layout splits in two. */
-    font-size: clamp(1.5rem, 15cqi, 4.5rem);
+    font-size: clamp(1.75rem, 12cqi, 3.5rem);
     max-inline-size: 100%;
-    overflow-wrap: anywhere;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
+    letter-spacing: -.025em;
   }
 </style>

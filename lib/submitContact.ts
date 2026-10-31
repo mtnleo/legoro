@@ -30,7 +30,7 @@ export async function submitContact(
       body: JSON.stringify({
         ...parsed.data,
         access_key: ACCESS_KEY,
-        subject: 'Nueva consulta — LEGORO',
+        subject: 'Nueva consulta | LEGORO',
         from_name: 'LEGORO',
         'h-captcha-response': captchaToken,
         botcheck: botcheck ? 'on' : '',

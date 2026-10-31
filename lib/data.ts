@@ -2,7 +2,6 @@ export interface Service {
   id: string;
   title: string;
   description: string;
-  iconName: string;
 }
 
 export interface TeamMember {
@@ -13,58 +12,39 @@ export interface TeamMember {
 
 export const SERVICES: Service[] = [
   {
-    id: 'puesta-tierra',
-    title: 'Medición de puesta a tierra',
-    description: 'Verificación técnica normativa para garantizar la seguridad de las instalaciones.',
-    iconName: 'Zap',
+    id: 'instalaciones-electricas',
+    title: 'Instalaciones eléctricas',
+    description: 'Diseño, dirección y ejecución de instalaciones eléctricas residenciales, comerciales e industriales.',
   },
   {
-    id: 'masas',
-    title: 'Continuidad de las masas',
-    description: 'Ensayos de seguridad eléctrica según reglamentación vigente AEA.',
-    iconName: 'Cpu',
+    id: 'auditoria-energetica',
+    title: 'Auditoría energética',
+    description: 'Gestión de consumos, optimización energética y análisis de facturación eléctrica.',
   },
   {
-    id: 'diferenciales',
-    title: 'Prueba de interruptores diferenciales',
-    description: 'Diagnóstico preciso del tiempo y corriente de disparo de protecciones.',
-    iconName: 'Shield',
+    id: 'energias-renovables',
+    title: 'Energías renovables',
+    description: 'Diseño e implementación de sistemas fotovoltaicos.',
   },
   {
-    id: 'termografia',
-    title: 'Relevamiento termográfico',
-    description: 'Detección temprana de puntos calientes en tableros eléctricos sin interrupción.',
-    iconName: 'Thermometer',
+    id: 'continuidad-servicio',
+    title: 'Continuidad de servicio',
+    description: 'Diseño e instalación de sistemas de respaldo para cargas críticas.',
   },
   {
-    id: 'diseño',
-    title: 'Diseño de instalaciones',
-    description: 'Proyectos eléctricos residenciales, comerciales e industriales a medida.',
-    iconName: 'Layout',
+    id: 'mantenimiento-preventivo',
+    title: 'Mantenimiento preventivo',
+    description: 'Relevamiento de instalaciones industriales y comerciales para la detección temprana de fallas.',
   },
   {
-    id: 'factor-potencia',
-    title: 'Corrección de factor de potencia',
-    description: 'Optimización del consumo y eliminación de multas por energía reactiva.',
-    iconName: 'Zap',
+    id: 'automatizacion-control',
+    title: 'Automatización y control',
+    description: 'Programación de PLC y desarrollo de automatismos industriales.',
   },
   {
-    id: 'on-grid',
-    title: 'Sistemas Fotovoltaicos ON-GRID',
-    description: 'Ahorro energético inyectando excedentes a la red pública.',
-    iconName: 'Sun',
-  },
-  {
-    id: 'off-grid',
-    title: 'Sistemas Fotovoltaicos OFF-GRID',
-    description: 'Independencia energética total para zonas sin red eléctrica.',
-    iconName: 'Battery',
-  },
-  {
-    id: 'hibridos',
-    title: 'Sistemas solares híbridos',
-    description: 'Lo mejor de ambos mundos: ahorro con red y respaldo con baterías.',
-    iconName: 'Sun',
+    id: 'consultoria-electrica',
+    title: 'Consultoría eléctrica',
+    description: 'Asesoramiento técnico para evaluar instalaciones, analizar alternativas y orientar decisiones sobre proyectos eléctricos.',
   },
 ];
 
@@ -76,12 +56,12 @@ export const TEAM: TeamMember[] = [
   },
   {
     name: 'Matías Rocca',
-    role: 'Técnico Electromecánico',
+    role: 'Ingeniero Electromecánico',
     linkedin: 'https://www.linkedin.com/in/matias-rocca-a89465266/',
   },
   {
     name: 'Leandro González',
-    role: 'Técnico Electromecánico',
+    role: 'Ingeniero Electromecánico',
     linkedin: 'https://www.linkedin.com/in/leandro-gonzalez-753327274/',
   },
 ];

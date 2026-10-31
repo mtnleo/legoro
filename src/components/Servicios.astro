@@ -1,55 +1,38 @@
 ---
-import { Zap, Cpu, Shield, Thermometer, Layout, Sun, Battery } from 'lucide-react';
 import { SERVICES } from '@/lib/data';
-
-const ICON_MAP: Record<string, typeof Zap> = {
-  Zap:         Zap,
-  Cpu:         Cpu,
-  Shield:      Shield,
-  Thermometer: Thermometer,
-  Layout:      Layout,
-  Sun:         Sun,
-  Battery:     Battery,
-};
 ---
-<section
-      id="servicios"
-      class="py-24 md:py-32 relative bg-industrial-navy shadow-[inset_0_20px_40px_rgba(0,0,0,0.3)]"
-    >
-      <div class="container-fluid mx-auto px-6 md:px-12 max-w-[1600px]">
-        <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-          <div class="max-w-2xl">
-            <h2 class="text-sm font-black uppercase text-industrial-accent tracking-[0.4em] mb-4 font-title">
-              Nuestra Especialidad
-            </h2>
-            <h3 class="text-4xl md:text-6xl font-black tracking-tighter leading-none font-display uppercase italic">
-              Servicios para una infraestructura resiliente.
-            </h3>
-          </div>
-          <a
-            href="#contacto"
-            class="text-industrial-accent border-b-2 border-industrial-accent font-bold text-xs uppercase tracking-widest pb-1 hover:opacity-70 transition-opacity"
-          >
-            Consultar catálogo completo
-          </a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {SERVICES.map((service) => { const Icon = ICON_MAP[service.iconName]; return (
-            <div
-              class="bg-industrial-surface p-10 rounded-[40px] border border-white/5 hover:bg-industrial-accent group transition-all duration-500"
-            >
-              <div class="mb-10 transform group-hover:scale-110 duration-500 origin-left">
-                <Icon className="w-8 h-8 text-industrial-accent group-hover:text-industrial-base transition-colors" />
-              </div>
-              <h3 class="text-xl font-black mb-4 tracking-tight group-hover:text-industrial-base transition-colors">
-                {service.title}
-              </h3>
-              <p class="text-gray-400 group-hover:text-industrial-base/80 leading-relaxed text-xs transition-colors font-medium">
-                {service.description}
-              </p>
-            </div>
-          ); })}
-        </div>
-      </div>
-    </section>
+<section id="servicios" aria-labelledby="services-heading" class="services-section">
+  <div class="services-inner">
+    <div class="services-intro">
+      <h2 id="services-heading">Qué necesitás resolver</h2>
+    </div>
+    <ul class="service-list">
+      {SERVICES.map((service) => (
+        <li data-service-id={service.id}>
+          <h3>{service.title}</h3>
+          <p>{service.description}</p>
+        </li>
+      ))}
+    </ul>
+    <a class="services-contact" href="#contacto">¿No sabés qué servicio necesitás? Contanos tu consulta.</a>
+  </div>
+</section>
+<style>
+  .services-section { background: oklch(97% .009 245); color: var(--color-industrial-base); padding: 5rem 1.5rem; }
+  .services-inner { max-width: 80rem; margin-inline: auto; }
+  .services-intro { max-width: 45rem; margin-bottom: 3rem; }
+  h2 { font-family: var(--font-space-grotesk); font-size: clamp(2rem, 3.5vw, 3.1rem); font-weight: 550; line-height: 1.2; letter-spacing: -.025em; text-wrap: balance; }
+  .services-intro p { margin-top: 1.2rem; max-width: 57ch; color: oklch(39% .025 255); font-size: 1.05rem; line-height: 1.75; }
+  .service-list { border-top: 1px solid oklch(77% .02 245); }
+  .service-list li { display: grid; gap: .8rem; padding-block: 1.75rem; border-bottom: 1px solid oklch(82% .018 245); }
+  h3 { font-family: var(--font-space-grotesk); font-size: clamp(1.3rem, 2.1vw, 1.8rem); font-weight: 500; line-height: 1.35; }
+  .service-list p { font-size: 1rem; line-height: 1.75; color: oklch(39% .025 255); max-width: 59ch; }
+  .services-contact { display: inline-flex; align-items: center; min-height: 44px; margin-top: 1rem; text-decoration: underline; text-underline-offset: .3em; line-height: 1.65; }
+  a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+  @media (min-width: 640px) { .service-list li { grid-template-columns: 1fr 1.5fr; gap: 3rem; } }
+  @media (min-width: 1024px) {
+    .services-section { padding: 6rem 2rem; }
+    .services-intro { margin-bottom: 4rem; }
+    .service-list li { padding-block: 2rem; }
+  }
+</style>

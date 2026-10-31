@@ -58,11 +58,9 @@
   }
 }
 
-:root { --font-inter: "Inter Variable"; --font-plus-jakarta-sans: "Plus Jakarta Sans Variable"; --font-space-grotesk: "Space Grotesk Variable"; --font-outfit: "Outfit Variable"; }
+:root { --font-inter: "Plus Jakarta Sans Variable"; --font-plus-jakarta-sans: "Plus Jakarta Sans Variable"; --font-space-grotesk: "Space Grotesk Variable"; --font-outfit: "Space Grotesk Variable"; }
 [hidden] { display: none !important; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
-#site-header.is-scrolled { height: 5rem; padding-block: .5rem; }
-#site-header.is-scrolled .nav-logo { height: 2.5rem; }
-@media (min-width: 768px) { #site-header.is-scrolled .nav-logo { height: 3rem; } }
+:where(section[id]) { scroll-margin-top: 7rem; }
 @keyframes hero-enter { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .hero-entrance { animation: hero-enter .8s ease-out both; }

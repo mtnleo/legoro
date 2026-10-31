@@ -1,101 +1,47 @@
 ---
-import { ChevronRight, Clock, Layout, Sun, Shield, Thermometer } from 'lucide-react';
-
-const QUICK_SERVICES = [
-  { label: 'Instalaciones', sub: 'Tableros e iluminación.', icon: Layout },
-  { label: 'Energía Solar', sub: 'ON/OFF-GRID y Híbridos.', icon: Sun },
-  { label: 'Seguridad', sub: 'Puesta a tierra AEA.', icon: Shield },
-  { label: 'Termografía', sub: 'Detección de fallas.', icon: Thermometer },
-];
+import { ArrowUpRight } from 'lucide-react';
 ---
-<section
-        id="hero"
-        class="relative pt-32 pb-20 md:pt-60 md:pb-32 overflow-hidden border-b border-white/5"
-      >
-        
-        <div class="absolute inset-0 z-0">
-          <picture class="absolute inset-0">
-            <source media="(max-width: 768px)" srcset="/City_Background-sm.avif" type="image/avif" />
-            <source media="(max-width: 768px)" srcset="/City_Background-sm.webp" type="image/webp" />
-            <source srcset="/City_Background.avif" type="image/avif" />
-            <source srcset="/City_Background.webp" type="image/webp" />
-            
-            <img
-              src="/City_Background.png"
-              alt=""
-              class="absolute inset-0 w-full h-full object-cover object-center"
-              width="2752"
-              height="1536"
-              fetchpriority="high"
-              decoding="sync"
-            />
-          </picture>
-          <div class="absolute inset-0 bg-industrial-base/60 backdrop-blur-sm" />
-          <div class="absolute inset-0 bg-linear-to-b from-industrial-base/20 via-transparent to-industrial-base" />
-        </div>
-
-        <div class="container mx-auto px-6 md:px-8 relative z-10">
-          <div class="flex flex-col lg:flex-row gap-12 md:gap-16 items-center">
-            
-            <div
-
-
-
-              class="hero-entrance lg:w-3/5 text-center lg:text-left"
-            >
-              <div class="flex flex-wrap justify-center lg:justify-start gap-2 md:gap-3 text-[9px] md:text-[10px] uppercase font-black text-industrial-accent tracking-[0.2em] md:tracking-[0.25em] mb-6 md:mb-8">
-                <span class="bg-white/5 px-2 py-1 rounded border border-white/10 uppercase">Habilitados para firmar</span>
-                <span class="bg-white/5 px-2 py-1 rounded border border-white/10 uppercase">Mar del Plata</span>
-                <span class="bg-white/5 px-2 py-1 rounded border border-white/10 uppercase">Seguridad Eléctrica</span>
-              </div>
-
-              <h1 class="text-[clamp(3.36rem,7.2vw,6rem)] font-jakarta font-extrabold text-white leading-[1.1] tracking-[-0.02em] mb-6 md:mb-10 uppercase italic">
-                El futuro{' '}
-                <span
-                  class="text-industrial-accent"
-                  style="text-shadow: 0 0 20px rgba(176, 190, 197, 0.5), 0 0 40px rgba(176, 190, 197, 0.2)"
-                >
-                  eléctrico,
-                </span>{' '}
-                <br />
-                hoy en tu proyecto.
-              </h1>
-
-              <p class="text-[clamp(1rem,2vw,1.25rem)] font-jakarta font-normal text-white/80 mb-10 md:mb-14 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Mediciones, instalaciones y energía solar. Soluciones técnicas certificadas para cada escala.
-              </p>
-
-              <div class="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-6 md:gap-8">
-                <a
-                  href="#contacto"
-                  class="w-full sm:w-auto bg-industrial-accent text-industrial-base px-10 md:px-14 py-4 md:py-6 rounded-2xl font-black text-lg md:text-xl btn-hover-effect shadow-[0_20px_50px_rgba(176,184,195,0.2)] flex items-center justify-center gap-3 group"
-                >
-                  PRESUPUESTÁ
-                  <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                </a>
-                <div class="flex items-center gap-3 opacity-60">
-                  <div class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-industrial-accent" />
-                  </div>
-                  <span class="text-[10px] font-black uppercase tracking-widest italic">Respuesta en 24hs</span>
-                </div>
-              </div>
-            </div>
-
-            
-            <div class="lg:w-[45%] w-[85%] mx-auto lg:mx-0 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {QUICK_SERVICES.map((item) => { const Icon = item.icon; return (
-                <div
-                  class="bg-industrial-surface/80 backdrop-blur-sm p-6 rounded-3xl border border-white/5 hover:border-industrial-accent/40 transition-all group"
-                >
-                  <div class="text-industrial-accent mb-4 group-hover:scale-110 transition-transform origin-left">
-                    <Icon className="w-6 h-6 text-industrial-accent" />
-                  </div>
-                  <h3 class="font-black text-xs md:text-sm uppercase mb-1">{item.label}</h3>
-                  <p class="text-[10px] opacity-50 leading-tight">{item.sub}</p>
-                </div>
-              ); })}
-            </div>
-          </div>
-        </div>
-      </section>
+<section id="hero" aria-labelledby="hero-heading" class="photographic-hero">
+  <picture class="hero-background">
+    <source media="(max-width: 768px)" srcset="/City_Background-sm.avif" type="image/avif" />
+    <source media="(max-width: 768px)" srcset="/City_Background-sm.webp" type="image/webp" />
+    <source srcset="/City_Background.avif" type="image/avif" />
+    <source srcset="/City_Background.webp" type="image/webp" />
+    <img src="/City_Background.png" alt="" width="2752" height="1536" fetchpriority="high" decoding="sync" />
+  </picture>
+  <div class="hero-shade" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-copy">
+    <h1 id="hero-heading">Eficiencia energética y seguridad eléctrica para tu proyecto.</h1>
+    <p>Diseñamos, dirigimos y ejecutamos instalaciones eléctricas, sistemas de energía y automatización. Trabajamos desde Mar del Plata en proyectos de la ciudad y otras localidades.</p>
+    <div class="hero-actions">
+      <a class="hero-quote" href="#contacto">Presupuestá tu proyecto <ArrowUpRight aria-hidden="true" size={21} /></a>
+      <a class="hero-services-link" href="#servicios">Conocé los servicios</a>
+    </div>
+    </div>
+  </div>
+</section>
+<style>
+  .photographic-hero { position: relative; isolation: isolate; overflow: hidden; background: var(--color-industrial-base); color: oklch(98% .005 245); min-height: 42rem; display: flex; align-items: center; padding: 11rem 1.5rem 6rem; }
+  .hero-background, .hero-background img, .hero-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .hero-background { z-index: -2; }
+  .hero-background img { object-fit: cover; object-position: center; }
+  .hero-shade { z-index: -1; background: oklch(19% .055 255 / .66); }
+  .hero-inner { width: 100%; max-width: 80rem; margin-inline: auto; text-align: center; }
+  .hero-copy { max-width: 52rem; margin-inline: auto; }
+  h1 { max-width: 18ch; margin-inline: auto; font-family: var(--font-plus-jakarta-sans); font-size: clamp(2.25rem, 4.5vw, 4.5rem); font-weight: 650; line-height: 1.12; letter-spacing: -.025em; text-wrap: balance; }
+  p { max-width: 55ch; margin: 1.75rem auto 0; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.75; color: oklch(95% .008 245); }
+  .hero-actions { width: fit-content; max-width: 100%; margin-inline: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 1rem 2rem; margin-top: 2.25rem; }
+  .hero-quote { display: inline-flex; align-items: center; justify-content: center; gap: 1.25rem; min-height: 3.5rem; padding: 1rem 1.4rem; background: var(--color-industrial-accent); color: var(--color-industrial-base); border-radius: .3rem; font-weight: 650; }
+  .hero-quote:hover { background: oklch(96% .008 245); }
+  .hero-services-link { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: .35em; }
+  a:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+  @media (min-width: 1024px) {
+    .photographic-hero { min-height: 46rem; padding: 11rem 2rem 6rem; }
+    .hero-inner { text-align: left; }
+    .hero-copy { margin-inline: 0; }
+    h1, p { margin-left: 0; }
+    .hero-actions { margin-left: 0; justify-content: flex-start; }
+    .hero-shade { background: linear-gradient(90deg, oklch(18% .055 255 / .9), oklch(18% .055 255 / .62) 58%, oklch(18% .055 255 / .25)); }
+  }
+</style>

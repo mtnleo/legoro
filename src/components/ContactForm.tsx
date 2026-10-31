@@ -4,7 +4,7 @@ import { ChevronRight, CheckCircle2, Loader2, XCircle, X, AlertCircle } from 'lu
 import { SERVICES } from '@/lib/data';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { submitContact } from '@/lib/submitContact';
-import { contactSchema, COMPANY_OPTIONS } from '@/lib/contactSchema';
+import { contactSchema, COMPANY_OPTIONS, DEFAULT_SERVICE_ID } from '@/lib/contactSchema';
 import { captchaPresentation, type FormStatus } from '@/lib/contactPresentation';
 import { watchCaptchaSize } from '@/lib/captchaLayout';
 import { createCaptchaLifecycle, type CaptchaRegistration } from '@/lib/captchaLifecycle';
@@ -28,7 +28,7 @@ const INITIAL_VALUES: FormValues = {
   full_name: '',
   company: '',
   phone_number: '',
-  service_type: SERVICES[0].id,
+  service_type: DEFAULT_SERVICE_ID,
   description: '',
 };
 
@@ -199,7 +199,7 @@ export default function Contacto() {
         setValues(INITIAL_VALUES);
         setTouched({});
         setBotcheck(false);
-        setToast({ type: 'success', message: 'Solicitud enviada. Gracias por contactarnos.' });
+        setToast({ type: 'success', message: 'Consulta enviada. Gracias por escribirnos.' });
       } else {
         setFormStatus('error');
         setToast({ type: 'error', message: 'No pudimos confirmar el envío. Tus datos siguen en el formulario.' });
@@ -251,7 +251,7 @@ export default function Contacto() {
                       htmlFor={fieldId('full_name')}
                       className="text-[10px] uppercase tracking-[0.15em] text-[#0A1628]/50 font-bold mb-2 block"
                     >
-                      Nombre Completo{' '}
+                      Nombre completo{' '}
                       <span aria-hidden="true" className="text-red-500">*</span>
                     </label>
                     <input
@@ -355,7 +355,7 @@ export default function Contacto() {
                         {SERVICES.map(s => (
                           <option key={s.id} value={s.id}>{s.title}</option>
                         ))}
-                        <option value="otro">Otro / Consulta General</option>
+                        <option value="otro">Otro servicio o consulta general</option>
                       </select>
                       <ChevronRight className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#0A1628]/50 rotate-90 pointer-events-none" aria-hidden="true" />
                     </div>
@@ -379,7 +379,7 @@ export default function Contacto() {
                       aria-describedby={visibleError('description') ? errorId('description') : undefined}
                       rows={4}
                       className={`${inputClass('description')} resize-none`}
-                      placeholder="Describí brevemente tu necesidad técnica..."
+                      placeholder="Contanos qué necesitás resolver."
                     />
                     <FieldError id={errorId('description')} message={visibleError('description')} />
                   </div>
@@ -400,7 +400,7 @@ export default function Contacto() {
                     </div>
                   )}
                   <p className="mt-3 text-xs text-[#0A1628]/60">
-                    Usamos tus datos para responder tu consulta. El envío se procesa mediante Web3Forms y la verificación mediante hCaptcha. Consulta nuestra{' '}
+                    Usamos tus datos para responder tu consulta. El envío se procesa mediante Web3Forms y la verificación mediante hCaptcha. Consultá nuestra{' '}
                     <a href="/privacidad" className="underline underline-offset-2">política de privacidad</a>.
                   </p>
                 </div>
@@ -412,9 +412,9 @@ export default function Contacto() {
                     type="submit"
                     disabled={!hydrated || formStatus === 'submitting' || formStatus === 'success'}
                     aria-label={
-                      formStatus === 'submitting' ? 'Enviando solicitud…' :
-                      formStatus === 'success' ? 'Solicitud enviada correctamente' :
-                      formStatus === 'error' ? 'Reintentar envío de solicitud' : 'Enviar solicitud de contacto'
+                      formStatus === 'submitting' ? 'Enviando consulta…' :
+                      formStatus === 'success' ? 'Consulta enviada' :
+                      formStatus === 'error' ? 'Reintentar envío' : 'Enviar consulta'
                     }
                     className={`w-full p-6 rounded-[14px] font-black uppercase tracking-wider transition-all duration-300 flex items-center justify-center gap-3 ${
                       formStatus === 'success'
@@ -426,7 +426,7 @@ export default function Contacto() {
                   >
                     {formStatus === 'idle' && (
                       <>
-                        ENVIAR SOLICITUD
+                        ENVIAR CONSULTA
                         <ChevronRight className="w-6 h-6" aria-hidden="true" />
                       </>
                     )}
@@ -434,7 +434,7 @@ export default function Contacto() {
                       <Loader2 className="w-8 h-8 animate-spin" aria-hidden="true" />
                     )}
                     {formStatus === 'success' && (
-                      <><CheckCircle2 className="w-8 h-8" aria-hidden="true" /> SOLICITUD ENVIADA</>
+                      <><CheckCircle2 className="w-8 h-8" aria-hidden="true" /> CONSULTA ENVIADA</>
                     )}
                     {formStatus === 'error' && (
                       <><XCircle className="w-8 h-8" aria-hidden="true" /> REINTENTAR ENVÍO</>
@@ -442,8 +442,8 @@ export default function Contacto() {
                   </button>
                   <p role="status" aria-live="polite" className="mt-3 text-sm text-[#0A1628]">
                     {!hydrated && 'Preparando el formulario…'}
-                    {formStatus === 'submitting' && 'Enviando solicitud…'}
-                    {formStatus === 'success' && 'Solicitud enviada. Gracias por contactarnos.'}
+                    {formStatus === 'submitting' && 'Enviando consulta…'}
+                    {formStatus === 'success' && 'Consulta enviada. Gracias por escribirnos.'}
                     {formStatus === 'error' && 'No pudimos confirmar el envío. Tus datos se conservaron. Completá nuevamente la verificación para reintentar.'}
                   </p>
                 </div>

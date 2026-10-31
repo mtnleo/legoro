@@ -4,7 +4,7 @@ import { contactSchema } from '../lib/contactSchema.ts';
 
 const valid = {
   full_name: 'María Pérez', company: 'Particular', phone_number: '+54 9 223 555-0100',
-  service_type: 'puesta-tierra', description: '',
+  service_type: 'instalaciones-electricas', description: '',
 };
 
 test('rejects whitespace and punctuation-only names and phones without enough digits', () => {
@@ -33,7 +33,7 @@ test('sends normalized business fields, public key, hCaptcha response and honeyp
     assert.deepEqual(body, {
       ...valid, phone_number: '+5492235550100',
       access_key: 'ec60268a-2550-4dbe-90ff-9725eff7d6af',
-      subject: 'Nueva consulta — LEGORO', from_name: 'LEGORO',
+      subject: 'Nueva consulta | LEGORO', from_name: 'LEGORO',
       'h-captcha-response': 'solved-token', botcheck: '',
     });
     return Response.json({ success: true });
@@ -87,4 +87,13 @@ test('aborts a stalled request after 15 seconds and resolves a retryable outcome
   });
   context.mock.timers.tick(15_000);
   assert.deepEqual(await pending, { success: false, reason: 'delivery' });
+});
+
+test('confirmed services and the default stay aligned with the form schema', async () => {
+  const { SERVICES } = await import('../lib/data.ts');
+  const { SERVICE_ID_LIST, DEFAULT_SERVICE_ID } = await import('../lib/contactSchema.ts');
+  assert.equal(DEFAULT_SERVICE_ID, 'instalaciones-electricas');
+  assert.deepEqual(SERVICE_ID_LIST, [...SERVICES.map(({ id }) => id), 'otro']);
+  for (const service_type of SERVICE_ID_LIST) assert.equal(contactSchema.safeParse({ ...valid, service_type }).success, true, service_type);
+  for (const service_type of ['puesta-tierra', 'masas', 'on-grid', 'not-a-service']) assert.equal(contactSchema.safeParse({ ...valid, service_type }).success, false, service_type);
 });

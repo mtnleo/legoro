@@ -1,102 +1,44 @@
 ---
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import LogoPicture from './LogoPicture.astro';
 const NAV_ITEMS = [
-  { name: 'SERVICIOS', href: '#servicios' },
-  { name: 'ELEGIRNOS', href: '#elegirnos' },
-  { name: 'EQUIPO', href: '#equipo' },
-  { name: 'CONTACTO', href: '#contacto' },
+  { name: 'Servicios', href: '#servicios' },
+  { name: 'Cómo trabajamos', href: '#elegirnos' },
+  { name: 'Equipo', href: '#equipo' },
+  { name: 'Contacto', href: '#contacto' },
 ];
-
 ---
-    <header
-      id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex items-center h-28 bg-transparent py-4"
-    >
-      <nav class="w-full px-6 md:px-8 flex items-center justify-between gap-4">
-        
-        <div class="flex items-center flex-1">
-          <LogoPicture
-            priority
-            imgClassName="nav-logo transition-all duration-300 object-contain h-14 md:h-20 w-auto"
-          />
-        </div>
-
-        
-        <div class="hidden md:flex items-center justify-center shrink-0">
-          <div class="bg-white/5 border border-white/10 rounded-full px-6 py-2.5 backdrop-blur-md">
-            <div class="flex items-center gap-8 text-xs font-black uppercase tracking-[0.25em] opacity-80">
-              {NAV_ITEMS.map((item) => (
-                <a
-                  href={item.href}
-                  class="hover:text-industrial-accent hover:tracking-wide transition-all duration-300"
-                >
-                  {item.name.split(' ')[0]}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        
-        <div class="flex-1 flex justify-end items-center">
-          <a
-            href="#contacto"
-            class="hidden md:flex bg-industrial-accent text-industrial-base px-8 py-3 rounded-full font-bold text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-industrial-accent/20"
-          >
-            Presupuestá
-          </a>
-
-          <button
-            id="menu-open" type="button" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false" class="md:hidden p-3 bg-white/5 border border-white/10 rounded-2xl flex-shrink-0"
-            data-menu-open
-          >
-            <Menu className="w-6 h-6 text-industrial-accent" />
-          </button>
-        </div>
-      </nav>
-
-      
-      
-        
-          <div
-
-
-
-
-            id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navegación" hidden class="fixed inset-0 z-50 bg-industrial-base/95 backdrop-blur-2xl h-screen flex flex-col p-8"
-          >
-            <div class="flex justify-between items-center mb-16">
-              <LogoPicture imgClassName="h-10 w-auto object-contain" />
-              <button
-                data-menu-close type="button" aria-label="Cerrar menú"
-                class="p-3 bg-white/5 border border-white/10 rounded-2xl"
-              >
-                <X className="w-6 h-6 text-industrial-accent" />
-              </button>
-            </div>
-
-            <div class="flex flex-col gap-2">
-              {NAV_ITEMS.map((item) => (
-                <a
-                  href={item.href} data-menu-close
-                  class="text-3xl font-black italic tracking-tighter py-6 border-b border-white/5 flex justify-between items-center group transition-all text-left"
-                >
-                  {item.name}
-                  <ChevronRight className="w-6 h-6 text-industrial-accent opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
-                </a>
-              ))}
-            </div>
-
-            <div class="mt-auto">
-              <a
-                href="#contacto" data-menu-close
-                class="block w-full bg-industrial-accent text-industrial-base text-center py-5 text-xl font-black rounded-2xl shadow-2xl shadow-industrial-accent/20 active:scale-[0.98] transition-transform"
-              >
-                PRESUPUESTÁ AHORA
-              </a>
-            </div>
-          </div>
-
-      
-    </header>
-<script>import "../scripts/navigation";</script>
+<header id="site-header" class="site-header fixed top-0 left-0 right-0 z-50">
+  <nav aria-label="Navegación principal" class="site-navigation">
+    <a href="#hero" aria-label="LEGORO, inicio" class="brand-link"><LogoPicture priority imgClassName="nav-logo" /></a>
+    <div class="desktop-links">{NAV_ITEMS.map(({ name, href }) => <a href={href}>{name}</a>)}</div>
+    <a href="#contacto" class="nav-quote">Presupuestá <ArrowUpRight size={17} aria-hidden="true" /></a>
+    <button id="menu-open" type="button" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false" data-menu-open><Menu size={24} aria-hidden="true" /></button>
+  </nav>
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navegación" hidden>
+    <div class="mobile-menu-top"><LogoPicture imgClassName="menu-logo" /><button data-menu-close type="button" aria-label="Cerrar menú"><X size={24} aria-hidden="true" /></button></div>
+    <div class="mobile-links">{NAV_ITEMS.map(({ name, href }) => <a href={href} data-menu-close>{name}<ArrowUpRight size={22} aria-hidden="true" /></a>)}</div>
+    <a href="#contacto" data-menu-close class="mobile-quote">Consultá por tu proyecto <ArrowUpRight size={20} aria-hidden="true" /></a>
+  </div>
+</header>
+<script>import '../scripts/navigation';</script>
+<style>
+  .site-header { height: 6rem; background: var(--color-industrial-navy); color: oklch(96% .008 245); border-bottom: 1px solid oklch(35% .035 255); }
+  .site-navigation { max-width: 84rem; height: 100%; margin-inline: auto; padding-inline: 1.5rem; display: flex; align-items: center; gap: 1.5rem; }
+  .brand-link { margin-right: auto; display: flex; align-items: center; min-height: 44px; }
+  .brand-link :global(.nav-logo) { height: 4rem; width: auto; object-fit: contain; }
+  .desktop-links { display: none; align-items: center; gap: 1.5rem; font-size: .95rem; }
+  a { min-height: 44px; display: inline-flex; align-items: center; }
+  a:hover { text-decoration: underline; text-underline-offset: .35em; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--color-industrial-accent); outline-offset: 5px; }
+  .nav-quote { display: none; gap: .75rem; border: 1px solid var(--color-industrial-accent); padding: .65rem 1rem; border-radius: .25rem; font-size: .95rem; font-weight: 600; }
+  button { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; cursor: pointer; }
+  #mobile-menu { position: fixed; inset: 0; height: 100dvh; overflow-y: auto; background: var(--color-industrial-navy); padding: 1.5rem; display: flex; flex-direction: column; }
+  .mobile-menu-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
+  .mobile-menu-top :global(.menu-logo) { height: 3.5rem; width: auto; }
+  .mobile-links { display: flex; flex-direction: column; }
+  .mobile-links a { justify-content: space-between; padding-block: 1rem; border-bottom: 1px solid oklch(35% .035 255); font-size: clamp(1.25rem, 6vw, 1.75rem); }
+  .mobile-quote { gap: 1rem; width: fit-content; margin-top: 2rem; background: var(--color-industrial-accent); color: var(--color-industrial-base); padding: 1rem; border-radius: .25rem; font-weight: 600; }
+  @media (min-width: 768px) { .desktop-links, .nav-quote { display: flex; } #menu-open { display: none; } .site-navigation { gap: 1.25rem; } }
+  @media (min-width: 1024px) { .site-navigation { padding-inline: 2rem; } .desktop-links { gap: 2rem; } .nav-quote { margin-left: 1rem; } }
+</style>

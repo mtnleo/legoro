@@ -42,7 +42,6 @@ desktop.addEventListener('change', () => { if (desktop.matches && menuOpen) clos
 function onScroll() {
   const scrolled = window.scrollY > 20;
   header.classList.toggle('is-scrolled', scrolled);
-  header.classList.toggle('glass', scrolled);
 }
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();

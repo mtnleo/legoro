@@ -1,15 +1,34 @@
 ---
 import LogoPicture from './LogoPicture.astro';
+const year = new Date().getFullYear();
+const links = [
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Cómo trabajamos', href: '#elegirnos' },
+  { label: 'Equipo', href: '#equipo' },
+  { label: 'Contacto', href: '#contacto' },
+  { label: 'Política de privacidad', href: '/privacidad/' },
+];
 ---
-<footer class="py-12 border-t border-white/5 opacity-50 text-[10px] uppercase font-black tracking-widest leading-loose">
-      <div class="container mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div>© 2026 LEGORO • MAR DEL PLATA, ARGENTINA</div>
-        <div class="flex gap-10">
-          <a href="/privacidad" class="hover:text-industrial-accent transition-colors">POLÍTICA DE PRIVACIDAD</a>
-          <span class="hover:text-industrial-accent cursor-pointer transition-colors">TÉRMINOS TÉCNICOS</span>
-        </div>
-        <div class="flex items-center gap-4">
-          <LogoPicture imgClassName="h-8 w-auto opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all object-contain" />
-        </div>
-      </div>
-    </footer>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <a class="footer-brand" href="#hero" aria-label="LEGORO, inicio"><LogoPicture imgClassName="footer-logo" /></a>
+    <nav aria-label="Enlaces del pie de página">
+      <ul>{links.map(({ label, href }) => <li><a href={href}>{label}</a></li>)}</ul>
+    </nav>
+    <p class="footer-copyright">© {year} LEGORO</p>
+  </div>
+</footer>
+<style>
+  .site-footer { background: var(--color-industrial-navy); color: oklch(91% .012 245); padding: 1.25rem 1.5rem; border-top: 1px solid oklch(38% .025 255); }
+  .footer-inner { max-width: 80rem; margin-inline: auto; display: flex; flex-direction: column; align-items: center; gap: .5rem; text-align: center; }
+  .footer-brand { display: inline-flex; align-items: center; min-height: 44px; }
+  .footer-brand :global(.footer-logo) { width: 5rem; height: auto; object-fit: contain; }
+  nav { min-width: 0; }
+  ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 .9rem; }
+  nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: .85rem; line-height: 1.5; text-decoration: underline; text-underline-offset: .25em; }
+  a:focus-visible { outline: 2px solid var(--color-industrial-accent); outline-offset: 3px; }
+  .footer-copyright { color: oklch(77% .015 245); font-size: .8rem; line-height: 1.5; white-space: nowrap; }
+  /* Keep the fixed WhatsApp control clear of footer links on narrow screens. */
+  @media (max-width: 360px) { .site-footer { padding-bottom: 4rem; } }
+  @media (min-width: 1024px) { .site-footer { padding-left: 2rem; padding-right: 6rem; } .footer-inner { flex-direction: row; justify-content: space-between; gap: 2rem; } }
+</style>
