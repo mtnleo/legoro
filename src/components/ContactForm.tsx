@@ -5,10 +5,10 @@ import { SERVICES } from '@/lib/data';
 import HCaptcha from '@hcaptcha/react-hcaptcha';
 import { submitContact } from '@/lib/submitContact';
 import { contactSchema, COMPANY_OPTIONS } from '@/lib/contactSchema';
+import { captchaPresentation, type FormStatus } from '@/lib/contactPresentation';
 import { watchCaptchaSize } from '@/lib/captchaLayout';
 import { createCaptchaLifecycle, type CaptchaRegistration } from '@/lib/captchaLifecycle';
 
-type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 type FieldName = 'full_name' | 'company' | 'phone_number' | 'service_type' | 'description';
 
 interface FormValues {
@@ -162,6 +162,7 @@ export default function Contacto() {
           .map(issue => [issue.path[0] as FieldName, issue.message])
       );
   const isFormValid = parseResult.success;
+  const captcha = captchaPresentation(formStatus, captchaError);
 
   const visibleError = (name: FieldName) => (touched[name] ? allErrors[name] : undefined);
   const fieldId = (name: FieldName) => `${uid}-${name}`;
@@ -385,13 +386,13 @@ export default function Contacto() {
                 </fieldset>
 
                 <div className="order-2">
-                  {formStatus !== 'success' && <CaptchaWidget
+                  {captcha.showWidget && <CaptchaWidget
                     key={captchaKey}
                     onVerify={handleCaptchaSuccess}
                     onExpire={handleCaptchaExpire}
                     onError={handleCaptchaError}
                   />}
-                  {captchaError && (
+                  {captcha.showError && (
                     <div role="alert" className="mt-2 text-xs text-red-600 font-medium">
                       <p>Completá la verificación de seguridad. Si no carga, revisá tu conexión o bloqueador.</p>
                       <button type="button" onClick={resetCaptcha} disabled={formStatus === 'submitting'}
