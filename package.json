@@ -2,39 +2,41 @@
   "name": "legoro",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.14.1",
+    "npm": "11.12.1"
+  },
+  "packageManager": "npm@11.12.1",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "build:worker": "opennextjs-cloudflare build",
-    "start": "next start",
-    "preview": "opennextjs-cloudflare build && wrangler dev",
-    "lint": "eslint"
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "check": "astro check",
+    "test:contact": "node --test tests/contact.test.ts",
+    "test:static": "node --test tests/static.test.ts",
+    "test": "npm run test:contact && node --test tests/captcha-layout.test.ts tests/captcha-lifecycle.test.ts && npm run test:static"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.104.1",
-    "lucide-react": "^1.11.0",
-    "motion": "^12.38.0",
-    "next": "16.2.4",
+    "@astrojs/react": "7.1.2",
+    "@fontsource-variable/inter": "5.2.8",
+    "@fontsource-variable/outfit": "5.2.8",
+    "@fontsource-variable/plus-jakarta-sans": "5.2.8",
+    "@fontsource-variable/space-grotesk": "5.2.10",
+    "@hcaptcha/react-hcaptcha": "2.2.0",
+    "astro": "7.4.4",
+    "lucide-react": "1.11.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "zod": "^4.3.6"
+    "zod": "4.6.7"
   },
-  "browserslist": [
-    "chrome >= 111",
-    "edge >= 111",
-    "firefox >= 111",
-    "safari >= 16"
-  ],
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.19.4",
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@astrojs/check": "^0.9.6",
+    "@tailwindcss/vite": "4.3.3",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.4",
-    "tailwindcss": "^4",
-    "typescript": "^5",
-    "wrangler": "^4.85.0"
+    "tailwindcss": "4.3.3",
+    "typescript": "^5.9.3"
   }
 }

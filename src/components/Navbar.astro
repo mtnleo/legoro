@@ -1,0 +1,102 @@
+---
+import { Menu, X, ChevronRight } from 'lucide-react';
+import LogoPicture from './LogoPicture.astro';
+const NAV_ITEMS = [
+  { name: 'SERVICIOS', href: '#servicios' },
+  { name: 'ELEGIRNOS', href: '#elegirnos' },
+  { name: 'EQUIPO', href: '#equipo' },
+  { name: 'CONTACTO', href: '#contacto' },
+];
+
+---
+    <header
+      id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 flex items-center h-28 bg-transparent py-4"
+    >
+      <nav class="w-full px-6 md:px-8 flex items-center justify-between gap-4">
+        
+        <div class="flex items-center flex-1">
+          <LogoPicture
+            priority
+            imgClassName="nav-logo transition-all duration-300 object-contain h-14 md:h-20 w-auto"
+          />
+        </div>
+
+        
+        <div class="hidden md:flex items-center justify-center shrink-0">
+          <div class="bg-white/5 border border-white/10 rounded-full px-6 py-2.5 backdrop-blur-md">
+            <div class="flex items-center gap-8 text-xs font-black uppercase tracking-[0.25em] opacity-80">
+              {NAV_ITEMS.map((item) => (
+                <a
+                  href={item.href}
+                  class="hover:text-industrial-accent hover:tracking-wide transition-all duration-300"
+                >
+                  {item.name.split(' ')[0]}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="flex-1 flex justify-end items-center">
+          <a
+            href="#contacto"
+            class="hidden md:flex bg-industrial-accent text-industrial-base px-8 py-3 rounded-full font-bold text-[10px] uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-xl shadow-industrial-accent/20"
+          >
+            Presupuestá
+          </a>
+
+          <button
+            id="menu-open" type="button" aria-label="Abrir menú" aria-controls="mobile-menu" aria-expanded="false" class="md:hidden p-3 bg-white/5 border border-white/10 rounded-2xl flex-shrink-0"
+            data-menu-open
+          >
+            <Menu className="w-6 h-6 text-industrial-accent" />
+          </button>
+        </div>
+      </nav>
+
+      
+      
+        
+          <div
+
+
+
+
+            id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navegación" hidden class="fixed inset-0 z-50 bg-industrial-base/95 backdrop-blur-2xl h-screen flex flex-col p-8"
+          >
+            <div class="flex justify-between items-center mb-16">
+              <LogoPicture imgClassName="h-10 w-auto object-contain" />
+              <button
+                data-menu-close type="button" aria-label="Cerrar menú"
+                class="p-3 bg-white/5 border border-white/10 rounded-2xl"
+              >
+                <X className="w-6 h-6 text-industrial-accent" />
+              </button>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              {NAV_ITEMS.map((item) => (
+                <a
+                  href={item.href} data-menu-close
+                  class="text-3xl font-black italic tracking-tighter py-6 border-b border-white/5 flex justify-between items-center group transition-all text-left"
+                >
+                  {item.name}
+                  <ChevronRight className="w-6 h-6 text-industrial-accent opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
+                </a>
+              ))}
+            </div>
+
+            <div class="mt-auto">
+              <a
+                href="#contacto" data-menu-close
+                class="block w-full bg-industrial-accent text-industrial-base text-center py-5 text-xl font-black rounded-2xl shadow-2xl shadow-industrial-accent/20 active:scale-[0.98] transition-transform"
+              >
+                PRESUPUESTÁ AHORA
+              </a>
+            </div>
+          </div>
+
+      
+    </header>
+<script>import "../scripts/navigation";</script>
