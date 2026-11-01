@@ -88,7 +88,15 @@ test('team roles and actionable contact details match the confirmed content', as
   assert.ok(team);
   assert.doesNotMatch(team, /Técnico Electromecánico|Capital Intelectual|Equipo de Expertos/);
   assert.equal((team.match(/Ingeniero Electromecánico/g) ?? []).length, 3);
-  assert.match(team, /ingenieros electromecánicos de la Universidad Nacional de Mar del Plata \(UNMdP\)/);
+  for (const detail of [
+    'Somos ingenieros electromecánicos de la Universidad Nacional de Mar del Plata.',
+    'Trabajamos principalmente en Mar del Plata y acompañamos proyectos en otras localidades de la región.',
+    'diseño y desarrollo de instalaciones eléctricas de baja tensión',
+    'distribución de energía y diseño de tableros eléctricos industriales',
+    'planificación de obras eléctricas en empresas multinacionales',
+    'coordinación y dirección de equipos',
+    'ejecución de obras eléctricas llave en mano',
+  ]) assert.ok(team.includes(detail), detail);
   assert.equal((team.match(/<h3\b/g) ?? []).length, 3);
   const contact = html.match(/<section\b[^>]*id="contacto"[^>]*>([\s\S]*?)<\/section>/)?.[1];
   assert.ok(contact);
