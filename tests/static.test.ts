@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 
 test('homepage contains contact anchor, heading and form before JavaScript', () => {
   const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
@@ -13,14 +13,12 @@ test('homepage contains contact anchor, heading and form before JavaScript', () 
   assert.doesNotMatch(html, /client:only|\/_next\//);
 });
 
-test('static homepage preserves anchors, seven services, team and local responsive images', async () => {
-  const { SERVICES, TEAM } = await import('../lib/data.ts');
+test('static homepage preserves anchors, seven services and local responsive images', async () => {
+  const { SERVICES } = await import('../lib/data.ts');
   const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
-  for (const id of ['hero', 'servicios', 'elegirnos', 'equipo', 'contacto']) assert.ok(html.includes(`id="${id}"`), id);
+  for (const id of ['hero', 'servicios', 'elegirnos', 'contacto']) assert.ok(html.includes(`id="${id}"`), id);
   assert.equal(SERVICES.length, 7);
-  assert.equal(TEAM.length, 3);
   for (const service of SERVICES) assert.ok(html.includes(service.title) && html.includes(service.description), service.title);
-  for (const member of TEAM) assert.ok(html.includes(`LinkedIn de ${member.name}`) && html.includes(member.role), member.name);
   for (const asset of ['legoro-logo-400.avif', 'legoro-logo-400.webp']) assert.ok(html.includes(asset), asset);
 });
 
@@ -54,79 +52,29 @@ test('services are grouped without dropping or duplicating any catalog entry', a
   assert.ok(approach);
   assert.match(approach, /Mar del Plata/);
   assert.match(approach, /href="tel:\+5492235768622"/);
-  assert.match(approach, /href="#equipo"/);
   assert.match(approach, /href="#contacto"/);
   assert.doesNotMatch(approach, /tiempo récord|calibrado anualmente|firma autorizada|<svg|0[1-4]/);
 });
 
-test('team LinkedIn links match the supplied profiles in static HTML', async () => {
-  const { TEAM } = await import('../lib/data.ts');
-  const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
-  const profiles = [
-    ['Ezequiel Leonardi', 'https://www.linkedin.com/in/ezequiel-leonardi/'],
-    ['Matías Rocca', 'https://www.linkedin.com/in/matias-rocca-a89465266/'],
-    ['Leandro González', 'https://www.linkedin.com/in/leandro-gonzalez-753327274/'],
-  ];
-  for (const [name, url] of profiles) {
-    assert.equal(TEAM.find((member) => member.name === name)?.linkedin, url, name);
-    const link = [...html.matchAll(/<a\b[^>]*>/g)].map(([tag]) => tag)
-      .find((tag) => tag.includes(`aria-label="LinkedIn de ${name}"`));
-    assert.ok(link, name);
-    assert.ok(link.includes(`href="${url}"`), name);
+test('public pages do not render a team section or publish portraits and profiles', () => {
+  for (const path of ['index.html', 'privacidad/index.html', '404.html']) {
+    const html = readFileSync(new URL(`../dist/${path}`, import.meta.url), 'utf8');
+    assert.doesNotMatch(html, /(?:id="|href="#)equipo"|Quiénes somos|Conocé al equipo|data-team-member|linkedin\.com\/in\/|Retrato de/i);
+    assert.doesNotMatch(html, />\s*[^<>\s]+@gmail\.com\s*</i);
   }
+  const portraitStems = readdirSync(new URL('../src/assets/team/', import.meta.url))
+    .filter((name) => name.endsWith('.jpeg')).map((name) => name.slice(0, -5));
+  const publishedAssets = readdirSync(new URL('../dist/_astro/', import.meta.url));
+  assert.ok(portraitStems.every((stem) => !publishedAssets.some((name) => name.startsWith(stem))));
 });
 
-test('team roles and actionable contact details match the confirmed content', async () => {
-  const { TEAM } = await import('../lib/data.ts');
+test('actionable contact details remain available', () => {
   const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
-  assert.deepEqual(TEAM.map(({ name, role }) => [name, role]), [
-    ['Ezequiel Leonardi', 'Ingeniero Electromecánico'],
-    ['Matías Rocca', 'Ingeniero Electromecánico'],
-    ['Leandro González', 'Ingeniero Electromecánico'],
-  ]);
-  const team = html.match(/<section\b[^>]*id="equipo"[^>]*>([\s\S]*?)<\/section>/)?.[1];
-  assert.ok(team);
-  assert.doesNotMatch(team, /Técnico Electromecánico|Capital Intelectual|Equipo de Expertos/);
-  assert.equal((team.match(/Ingeniero Electromecánico/g) ?? []).length, 3);
-  for (const detail of [
-    'Somos ingenieros electromecánicos de la Universidad Nacional de Mar del Plata.',
-    'Trabajamos principalmente en Mar del Plata y acompañamos proyectos en otras localidades de la región.',
-    'diseño y desarrollo de instalaciones eléctricas de baja tensión',
-    'distribución de energía y diseño de tableros eléctricos industriales',
-    'planificación de obras eléctricas en empresas multinacionales',
-    'coordinación y dirección de equipos',
-    'ejecución de obras eléctricas llave en mano',
-  ]) assert.ok(team.includes(detail), detail);
-  assert.equal((team.match(/<h3\b/g) ?? []).length, 3);
   const contact = html.match(/<section\b[^>]*id="contacto"[^>]*>([\s\S]*?)<\/section>/)?.[1];
   assert.ok(contact);
   assert.match(contact, /<a\b[^>]*href="tel:\+5492235768622"[^>]*>[\s\S]*?\+54 9 2235 76-8622[\s\S]*?<\/a>/);
-  assert.match(contact, /<a\b[^>]*href="mailto:ezequielleonardiing@gmail\.com"[^>]*>[\s\S]*?ezequielleonardiing@gmail\.com[\s\S]*?<\/a>/);
+  assert.match(contact, /<a\b[^>]*href="mailto:ezequielleonardiing@gmail\.com"[^>]*>[\s\S]*?Escribinos por correo[\s\S]*?<\/a>/);
   assert.doesNotMatch(html, /\+54 223 000 0000/);
-});
-
-test('team portraits are local optimized responsive images with accessible names', () => {
-  const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
-  const team = html.match(/<section\b[^>]*id="equipo"[^>]*>([\s\S]*?)<\/section>/)?.[1];
-  assert.ok(team);
-  const images = [...team.matchAll(/<img\b[^>]*>/g)].map(([tag]) => tag);
-  assert.equal(images.length, 3);
-  for (const [index, [name, filename]] of [
-    ['Ezequiel Leonardi', 'ezequiel-leonardi'],
-    ['Matías Rocca', 'matias-rocca'],
-    ['Leandro González', 'leandro-gonzalez'],
-  ].entries()) {
-    const image = images[index];
-    assert.ok(image.includes(`alt="Retrato de ${name}"`));
-    assert.match(image, new RegExp(`src="/_astro/${filename}[^" ]*\\.webp"`));
-    assert.match(image, /width="800"/);
-    assert.match(image, /height="\d+"/);
-    assert.match(image, /loading="lazy"/);
-    assert.match(image, /decoding="async"/);
-    assert.match(image, /srcset="[^"]+320w[^"]+1200w"/);
-    assert.match(image, /sizes="[^"]+"/);
-    assert.match(image, /object-cover object-top/);
-  }
 });
 
 test('branded fixed WhatsApp contact replaces only the fixed quote CTA', () => {
@@ -160,8 +108,9 @@ test('privacy content remains exact and an explicit non-SPA 404 is emitted', () 
     'En LEGORO usamos el nombre, empresa o rol, teléfono, servicio de interés y mensaje opcional que envías en el formulario para atender y responder tu consulta.',
     'Web3Forms procesa el envío y nos entrega la consulta por correo electrónico. Según la configuración de LEGORO, conserva los envíos durante 7 días. Ese plazo no incluye las copias recibidas por correo electrónico.',
     'Usamos hCaptcha para prevenir el spam. Estos proveedores pueden procesar datos fuera de tu país según sus políticas de privacidad:',
-    'Para solicitar acceso, corrección o eliminación de tus datos, o dejar de recibir respuestas a tu consulta, escribe a',
+    'Para solicitar acceso, corrección o eliminación de tus datos, o dejar de recibir respuestas a tu consulta,',
     'mailto:ezequielleonardiing@gmail.com',
+    'escribinos por correo',
   ]) assert.ok(privacy.includes(text), text);
   const missing = readFileSync(new URL('../dist/404.html', import.meta.url), 'utf8');
   assert.match(missing, /404/);
@@ -201,23 +150,6 @@ test('confirmed seven services are the only form options and UI copy avoids unsu
   assert.doesNotMatch(html, /24hs|24h|24 horas|a medida|habilitados para firmar|calibrado anualmente|tiempo récord|3 ingenieros|Capital Intelectual|Equipo de Expertos/i);
 });
 
-test('team cards keep each portrait, full name, role and LinkedIn together with an accessible heading', async () => {
-  const { TEAM } = await import('../lib/data.ts');
-  const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
-  const team = html.match(/<section\b[^>]*id="equipo"[^>]*>([\s\S]*?)<\/section>/)?.[1];
-  assert.ok(team);
-  const cards = [...team.matchAll(/<article\b[^>]*data-team-member="([^"]+)"[^>]*>[\s\S]*?<\/article>/g)];
-  assert.equal(cards.length, TEAM.length);
-  for (const [index, member] of TEAM.entries()) {
-    const card = cards[index][0];
-    assert.equal(cards[index][1], member.name);
-    assert.ok(card.includes(`aria-labelledby="member-${index}"`));
-    assert.match(card, new RegExp(`<h3[^>]*id="member-${index}"[^>]*>${member.name}<\\/h3>`));
-    assert.ok(card.includes(`alt="Retrato de ${member.name}"`) && card.includes(member.role));
-    assert.ok(card.includes(`href="${member.linkedin}"`) && card.includes('LinkedIn'));
-  }
-});
-
 test('contact heading keeps the exact natural word and disables intraword wrapping', () => {
   const html = readFileSync(new URL('../dist/index.html', import.meta.url), 'utf8');
   const heading = html.match(/<h2\b[^>]*id="contacto-heading"[^>]*>([\s\S]*?)<\/h2>/);
@@ -238,7 +170,7 @@ test('compact footer preserves real brand and valid links without any map code',
   assert.ok(footer.includes(`© ${new Date().getFullYear()} LEGORO`));
   assert.match(footer, /footer-logo/);
   assert.match(footer, /aria-label="Enlaces del pie de página"/);
-  for (const id of ['hero', 'servicios', 'elegirnos', 'equipo', 'contacto']) {
+  for (const id of ['hero', 'servicios', 'elegirnos', 'contacto']) {
     assert.ok(footer.includes(`href="#${id}"`));
     assert.ok(html.includes(`id="${id}"`));
   }

@@ -1,6 +1,6 @@
 # LEGORO
 
-Static Astro website for LEGORO, preserving the Spanish content, visual identity, nine services and three team entries. The contact form is the only hydrated React island.
+Static Astro website for LEGORO, preserving the Spanish content, visual identity, and seven services. The contact form is the only hydrated React island.
 
 ## Local workflow
 

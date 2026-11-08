@@ -4,12 +4,6 @@ export interface Service {
   description: string;
 }
 
-export interface TeamMember {
-  name: string;
-  role: string;
-  linkedin: string;
-}
-
 export const SERVICES: Service[] = [
   {
     id: 'instalaciones-electricas',
@@ -45,23 +39,5 @@ export const SERVICES: Service[] = [
     id: 'consultoria-electrica',
     title: 'Consultoría eléctrica',
     description: 'Asesoramiento técnico para evaluar instalaciones, analizar alternativas y orientar decisiones sobre proyectos eléctricos.',
-  },
-];
-
-export const TEAM: TeamMember[] = [
-  {
-    name: 'Ezequiel Leonardi',
-    role: 'Ingeniero Electromecánico',
-    linkedin: 'https://www.linkedin.com/in/ezequiel-leonardi/',
-  },
-  {
-    name: 'Matías Rocca',
-    role: 'Ingeniero Electromecánico',
-    linkedin: 'https://www.linkedin.com/in/matias-rocca-a89465266/',
-  },
-  {
-    name: 'Leandro González',
-    role: 'Ingeniero Electromecánico',
-    linkedin: 'https://www.linkedin.com/in/leandro-gonzalez-753327274/',
   },
 ];

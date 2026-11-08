@@ -2,7 +2,7 @@
 import '@fontsource-variable/plus-jakarta-sans/wght.css';
 import '@fontsource-variable/space-grotesk/wght.css';
 import '../styles/global.css';
-const { title = 'LEGORO | Ingeniería eléctrica en Mar del Plata', description = 'Ingenieros electromecánicos en Mar del Plata. Instalaciones eléctricas, eficiencia energética y automatización para proyectos de la ciudad y otras localidades.' } = Astro.props;
+const { title = 'LEGORO | Ingeniería eléctrica en Mar del Plata', description = 'Ingeniería electromecánica en Mar del Plata. Instalaciones eléctricas, eficiencia energética y automatización para proyectos de la ciudad y otras localidades.' } = Astro.props;
 const isNotFound = /^\/404(?:\.html|\/)?$/.test(Astro.url.pathname);
 const canonicalURL = isNotFound ? undefined : new URL(Astro.url.pathname, Astro.site);
 const shareImageURL = new URL('/og-legoro.png', Astro.site);

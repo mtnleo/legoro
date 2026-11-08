@@ -449,8 +449,8 @@ export default function Contacto() {
                 </div>
                 <noscript>
                   <p className="order-4 text-sm text-[#0A1628]">
-                    Para usar el formulario, activá JavaScript. También podés escribirnos a{' '}
-                    <a href="mailto:ezequielleonardiing@gmail.com" className="break-words underline">ezequielleonardiing@gmail.com</a>.
+                    Para usar el formulario, activá JavaScript. También podés{' '}
+                    <a href="mailto:ezequielleonardiing@gmail.com" className="break-words underline">escribirnos por correo</a>.
                   </p>
                 </noscript>
               </form>    </>

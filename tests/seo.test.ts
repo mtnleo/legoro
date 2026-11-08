@@ -63,7 +63,7 @@ test('share metadata uses each page title/description and a real 1200x630 produc
 test('homepage search and share copy describe the approved scope without response-time promises', () => {
   const html = readBuilt('index.html');
   assert.match(html, /<title>LEGORO \| Ingeniería eléctrica en Mar del Plata<\/title>/);
-  assert.match(html, /Ingenieros electromecánicos en Mar del Plata/);
+  assert.match(html, /Ingeniería electromecánica en Mar del Plata/);
   assert.doesNotMatch(html, /24hs|24h|24 horas|a medida|habilitados para firmar/i);
 });
 
